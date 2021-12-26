@@ -2,6 +2,7 @@ on:
   push:
     branches:
     - main
+    - arm64-support
   pull_request:
     branches:
     - main
@@ -26,7 +27,7 @@ jobs:
       run: build/linux/install.dependencies.sh
 
     - name: Install Magick.Native
-      run: 'build/linux/install.Magick.Native.sh "dlemstra" "${{ secrets.GITHUB_TOKEN }}"'
+      run: 'build/linux/install.Magick.Native.sh "vornet" "${{ secrets.GITHUB_TOKEN }}"'
 
     - name: Build and Test
       run: build/linux/test.Magick.NET.sh
@@ -48,7 +49,7 @@ jobs:
       run: build/linux-openmp/install.dependencies.sh
 
     - name: Install Magick.Native
-      run: 'build/linux-openmp/install.Magick.Native.sh "dlemstra" "${{ secrets.GITHUB_TOKEN }}"'
+      run: 'build/linux-openmp/install.Magick.Native.sh "vornet" "${{ secrets.GITHUB_TOKEN }}"'
 
     - name: Build and Test
       run: build/linux-openmp/test.Magick.NET.sh
@@ -75,6 +76,20 @@ jobs:
     - name: Build and Test
       run: build/linux-musl/test.Magick.NET.sh
 
+  linux_arm64:
+    name: 'Linux Arm64 (Q8/Q16/Q16-HDRI)'
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+
+    - run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+    - run: docker build --build-arg GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}" --platform linux/arm64/v8 -f build/linux-arm64/Arm64.Dockerfile . -t ghcr.io/vornet/magicknet:latest
+
   macos:
     name: 'MacOS (Q8/Q16/Q16-HDRI)'
     runs-on: macos-latest
@@ -90,7 +105,7 @@ jobs:
       run: build/macos/install.dependencies.sh
 
     - name: Install Magick.Native
-      run: 'build/macos/install.Magick.Native.sh "dlemstra" "${{ secrets.GITHUB_TOKEN }}"'
+      run: 'build/macos/install.Magick.Native.sh "vornet" "${{ secrets.GITHUB_TOKEN }}"'
 
     - name: Build and Test
       run: build/macos/test.Magick.NET.sh
@@ -129,7 +144,7 @@ jobs:
       working-directory: build/windows
 
     - name: Create nuget.config
-      run: './create-nuget-config.cmd "dlemstra" "${{ secrets.GITHUB_TOKEN }}"'
+      run: './create-nuget-config.cmd "vornet" "${{ secrets.GITHUB_TOKEN }}"'
       working-directory: src/Magick.Native
 
     - name: Install Magick.Native
@@ -149,7 +164,7 @@ jobs:
       working-directory: build/windows
 
     - name: Sign library (Magick.NET)
-      uses: dlemstra/code-sign-action@v1
+      uses: vornet/code-sign-action@v1
       with:
         certificate: '${{ secrets.IMAGEMAGICK_CERTIFICATE }}'
         folder: src/Magick.NET/bin
@@ -164,7 +179,7 @@ jobs:
       working-directory: publish
 
     - name: Sign NuGet package
-      uses: dlemstra/code-sign-action@v1
+      uses: vornet/code-sign-action@v1
       with:
         certificate: '${{ secrets.IMAGEMAGICK_CERTIFICATE }}'
         folder: publish/output
@@ -195,7 +210,7 @@ jobs:
       working-directory: build/windows
 
     - name: Create nuget.config
-      run: './create-nuget-config.cmd "dlemstra" "${{ secrets.GITHUB_TOKEN }}"'
+      run: './create-nuget-config.cmd "vornet" "${{ secrets.GITHUB_TOKEN }}"'
       working-directory: src/Magick.Native
 
     - name: Install Magick.Native
@@ -207,7 +222,7 @@ jobs:
       working-directory: build/windows
 
     - name: 'Sign library (Magick.NET.${{ matrix.libraryName }})'
-      uses: dlemstra/code-sign-action@v1
+      uses: vornet/code-sign-action@v1
       with:
         certificate: '${{ secrets.IMAGEMAGICK_CERTIFICATE }}'
         folder: 'src/Magick.NET.${{ matrix.libraryName }}/bin'
@@ -222,7 +237,7 @@ jobs:
       working-directory: publish
 
     - name: Sign NuGet package
-      uses: dlemstra/code-sign-action@v1
+      uses: vornet/code-sign-action@v1
       with:
         certificate: '${{ secrets.IMAGEMAGICK_CERTIFICATE }}'
         folder: publish/output
