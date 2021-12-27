@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <TargetFrameworks>netstandard21;netstandard20;net20</TargetFrameworks>
-    <Platforms>x86;x64;AnyCPU</Platforms>
+    <Platforms>x86;x64;Arm64;AnyCPU</Platforms>
     <AssemblyVersion>8.5.0</AssemblyVersion>
     <FileVersion>8.5.0</FileVersion>
     <Version>8.5.0</Version>
@@ -58,6 +58,10 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Platform)' == 'Arm64'">
+    <PlatformTarget>Arm64</PlatformTarget>
+  </PropertyGroup>
+
   <PropertyGroup>
     <AssemblyName>Magick.NET-$(QuantumName)-$(Platform)</AssemblyName>
     <AssemblyTitle>Magick.NET $(QuantumName) $(Platform) $(TargetFrameWork)</AssemblyTitle>
@@ -70,6 +74,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)/../Magick.Native/libraries/win/Magick.Native-$(QuantumName)-x64.gz">
       <LogicalName>ImageMagick.Resources.Library.Magick.Native_x64.gz</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)/../Magick.Native/libraries/win/Magick.Native-$(QuantumName)-Arm64.gz">
+      <LogicalName>ImageMagick.Resources.Library.Magick.Native_Arm64.gz</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
 
