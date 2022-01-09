@@ -64,6 +64,26 @@ namespace ImageMagick
                 public static extern IntPtr PixelCollection_ToShortArray(IntPtr Instance, UIntPtr x, UIntPtr y, UIntPtr width, UIntPtr height, IntPtr mapping, out IntPtr exception);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr PixelCollection_Create(IntPtr image, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void PixelCollection_Dispose(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr PixelCollection_GetArea(IntPtr Instance, UIntPtr x, UIntPtr y, UIntPtr width, UIntPtr height, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void PixelCollection_SetArea(IntPtr Instance, UIntPtr x, UIntPtr y, UIntPtr width, UIntPtr height, QuantumType* values, UIntPtr length, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr PixelCollection_ToByteArray(IntPtr Instance, UIntPtr x, UIntPtr y, UIntPtr width, UIntPtr height, IntPtr mapping, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr PixelCollection_ToShortArray(IntPtr Instance, UIntPtr x, UIntPtr y, UIntPtr width, UIntPtr height, IntPtr mapping, out IntPtr exception);
+            }
+            #endif
         }
         private NativePixelCollection _nativeInstance;
         private unsafe sealed class NativePixelCollection : NativeInstance
@@ -71,34 +91,50 @@ namespace ImageMagick
             static NativePixelCollection() { Environment.Initialize(); }
             protected override void Dispose(IntPtr instance)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.PixelCollection_Dispose(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.PixelCollection_Dispose(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.PixelCollection_Dispose(instance);
+                case Architecture.X86:
+                     NativeMethods.X86.PixelCollection_Dispose(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.PixelCollection_Dispose(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public NativePixelCollection(IMagickImage? image)
             {
                 IntPtr exception = IntPtr.Zero;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X64.PixelCollection_Create(MagickImage.GetInstance(image), out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     Instance = NativeMethods.X64.PixelCollection_Create(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X86.PixelCollection_Create(MagickImage.GetInstance(image), out exception);
+                case Architecture.X86:
+                     Instance = NativeMethods.X86.PixelCollection_Create(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     Instance = NativeMethods.Arm64.PixelCollection_Create(MagickImage.GetInstance(image), out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 CheckException(exception, Instance);
                 if (Instance == IntPtr.Zero)
                     throw new InvalidOperationException();
@@ -114,18 +150,26 @@ namespace ImageMagick
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.PixelCollection_GetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.PixelCollection_GetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.PixelCollection_GetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.PixelCollection_GetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.PixelCollection_GetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 CheckException(exception);
                 return result;
             }
@@ -134,18 +178,26 @@ namespace ImageMagick
                 fixed (QuantumType* valuesFixed = values)
                 {
                     IntPtr exception = IntPtr.Zero;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.PixelCollection_SetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, valuesFixed, (UIntPtr)length, out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.PixelCollection_SetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, valuesFixed, (UIntPtr)length, out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.PixelCollection_SetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, valuesFixed, (UIntPtr)length, out exception);
+                    case Architecture.X86:
+                         NativeMethods.X86.PixelCollection_SetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, valuesFixed, (UIntPtr)length, out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.PixelCollection_SetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, valuesFixed, (UIntPtr)length, out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     CheckException(exception);
                 }
             }
@@ -155,18 +207,26 @@ namespace ImageMagick
                 fixed (QuantumType* valuesFixed = values)
                 {
                     IntPtr exception = IntPtr.Zero;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.PixelCollection_SetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, valuesFixed, (UIntPtr)length, out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.PixelCollection_SetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, valuesFixed, (UIntPtr)length, out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.PixelCollection_SetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, valuesFixed, (UIntPtr)length, out exception);
+                    case Architecture.X86:
+                         NativeMethods.X86.PixelCollection_SetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, valuesFixed, (UIntPtr)length, out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.PixelCollection_SetArea(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, valuesFixed, (UIntPtr)length, out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     CheckException(exception);
                 }
             }
@@ -177,18 +237,26 @@ namespace ImageMagick
                 {
                     IntPtr exception = IntPtr.Zero;
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.PixelCollection_ToByteArray(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, mappingNative.Instance, out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.PixelCollection_ToByteArray(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, mappingNative.Instance, out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.PixelCollection_ToByteArray(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, mappingNative.Instance, out exception);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.PixelCollection_ToByteArray(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, mappingNative.Instance, out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.PixelCollection_ToByteArray(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, mappingNative.Instance, out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     var magickException = MagickExceptionHelper.Create(exception);
                     if (magickException == null)
                         return result;
@@ -208,18 +276,26 @@ namespace ImageMagick
                 {
                     IntPtr exception = IntPtr.Zero;
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.PixelCollection_ToShortArray(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, mappingNative.Instance, out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.PixelCollection_ToShortArray(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, mappingNative.Instance, out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.PixelCollection_ToShortArray(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, mappingNative.Instance, out exception);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.PixelCollection_ToShortArray(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, mappingNative.Instance, out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.PixelCollection_ToShortArray(Instance, (UIntPtr)x, (UIntPtr)y, (UIntPtr)width, (UIntPtr)height, mappingNative.Instance, out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     var magickException = MagickExceptionHelper.Create(exception);
                     if (magickException == null)
                         return result;

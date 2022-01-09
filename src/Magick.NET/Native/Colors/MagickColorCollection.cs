@@ -38,40 +38,68 @@ namespace ImageMagick
                 public static extern IntPtr MagickColorCollection_GetInstance(IntPtr list, UIntPtr index);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickColorCollection_DisposeList(IntPtr list);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickColorCollection_GetInstance(IntPtr list, UIntPtr index);
+            }
+            #endif
         }
         private unsafe static class NativeMagickColorCollection
         {
             static NativeMagickColorCollection() { Environment.Initialize(); }
             public static void DisposeList(IntPtr list)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickColorCollection_DisposeList(list);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickColorCollection_DisposeList(list);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickColorCollection_DisposeList(list);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickColorCollection_DisposeList(list);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickColorCollection_DisposeList(list);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public static IntPtr GetInstance(IntPtr list, int index)
             {
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickColorCollection_GetInstance(list, (UIntPtr)index);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickColorCollection_GetInstance(list, (UIntPtr)index);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickColorCollection_GetInstance(list, (UIntPtr)index);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickColorCollection_GetInstance(list, (UIntPtr)index);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickColorCollection_GetInstance(list, (UIntPtr)index);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return result;
             }
         }

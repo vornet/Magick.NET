@@ -38,23 +38,43 @@ namespace ImageMagick
                 public static extern void Environment_SetEnv(IntPtr name, IntPtr value);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void Environment_Initialize();
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void Environment_SetEnv(IntPtr name, IntPtr value);
+            }
+            #endif
         }
         private unsafe static class NativeEnvironment
         {
             public static void Initialize()
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.Environment_Initialize();
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.Environment_Initialize();
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.Environment_Initialize();
+                case Architecture.X86:
+                     NativeMethods.X86.Environment_Initialize();
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.Environment_Initialize();
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public static void SetEnv(string? name, string? value)
             {
@@ -62,18 +82,26 @@ namespace ImageMagick
                 {
                     using (var valueNative = UTF8Marshaler.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.Environment_SetEnv(nameNative.Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.Environment_SetEnv(nameNative.Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.Environment_SetEnv(nameNative.Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.Environment_SetEnv(nameNative.Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.Environment_SetEnv(nameNative.Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }

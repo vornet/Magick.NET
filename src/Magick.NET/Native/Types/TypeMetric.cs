@@ -62,6 +62,30 @@ namespace ImageMagick
                 public static extern double TypeMetric_UnderlineThickness_Get(IntPtr instance);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void TypeMetric_Dispose(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double TypeMetric_Ascent_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double TypeMetric_Descent_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double TypeMetric_MaxHorizontalAdvance_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double TypeMetric_TextHeight_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double TypeMetric_TextWidth_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double TypeMetric_UnderlinePosition_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double TypeMetric_UnderlineThickness_Get(IntPtr instance);
+            }
+            #endif
         }
         private unsafe sealed class NativeTypeMetric : NativeInstance
         {
@@ -72,18 +96,26 @@ namespace ImageMagick
             }
             public static void DisposeInstance(IntPtr instance)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.TypeMetric_Dispose(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.TypeMetric_Dispose(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.TypeMetric_Dispose(instance);
+                case Architecture.X86:
+                     NativeMethods.X86.TypeMetric_Dispose(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.TypeMetric_Dispose(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public NativeTypeMetric(IntPtr instance)
             {
@@ -101,18 +133,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.TypeMetric_Ascent_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.TypeMetric_Ascent_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.TypeMetric_Ascent_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.TypeMetric_Ascent_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.TypeMetric_Ascent_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -121,18 +161,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.TypeMetric_Descent_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.TypeMetric_Descent_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.TypeMetric_Descent_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.TypeMetric_Descent_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.TypeMetric_Descent_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -141,18 +189,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.TypeMetric_MaxHorizontalAdvance_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.TypeMetric_MaxHorizontalAdvance_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.TypeMetric_MaxHorizontalAdvance_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.TypeMetric_MaxHorizontalAdvance_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.TypeMetric_MaxHorizontalAdvance_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -161,18 +217,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.TypeMetric_TextHeight_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.TypeMetric_TextHeight_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.TypeMetric_TextHeight_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.TypeMetric_TextHeight_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.TypeMetric_TextHeight_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -181,18 +245,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.TypeMetric_TextWidth_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.TypeMetric_TextWidth_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.TypeMetric_TextWidth_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.TypeMetric_TextWidth_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.TypeMetric_TextWidth_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -201,18 +273,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.TypeMetric_UnderlinePosition_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.TypeMetric_UnderlinePosition_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.TypeMetric_UnderlinePosition_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.TypeMetric_UnderlinePosition_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.TypeMetric_UnderlinePosition_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -221,18 +301,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.TypeMetric_UnderlineThickness_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.TypeMetric_UnderlineThickness_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.TypeMetric_UnderlineThickness_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.TypeMetric_UnderlineThickness_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.TypeMetric_UnderlineThickness_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }

@@ -58,39 +58,77 @@ namespace ImageMagick
                 public static extern void QuantizeSettings_SetTreeDepth(IntPtr Instance, UIntPtr value);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr QuantizeSettings_Create();
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void QuantizeSettings_Dispose(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void QuantizeSettings_SetColors(IntPtr Instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void QuantizeSettings_SetColorSpace(IntPtr Instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void QuantizeSettings_SetDitherMethod(IntPtr Instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void QuantizeSettings_SetMeasureErrors(IntPtr Instance, [MarshalAs(UnmanagedType.Bool)] bool value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void QuantizeSettings_SetTreeDepth(IntPtr Instance, UIntPtr value);
+            }
+            #endif
         }
         private unsafe sealed class NativeQuantizeSettings : NativeInstance
         {
             static NativeQuantizeSettings() { Environment.Initialize(); }
             protected override void Dispose(IntPtr instance)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.QuantizeSettings_Dispose(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.QuantizeSettings_Dispose(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.QuantizeSettings_Dispose(instance);
+                case Architecture.X86:
+                     NativeMethods.X86.QuantizeSettings_Dispose(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.QuantizeSettings_Dispose(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public NativeQuantizeSettings()
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X64.QuantizeSettings_Create();
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     Instance = NativeMethods.X64.QuantizeSettings_Create();
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X86.QuantizeSettings_Create();
+                case Architecture.X86:
+                     Instance = NativeMethods.X86.QuantizeSettings_Create();
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     Instance = NativeMethods.Arm64.QuantizeSettings_Create();
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 if (Instance == IntPtr.Zero)
                     throw new InvalidOperationException();
             }
@@ -103,78 +141,118 @@ namespace ImageMagick
             }
             public void SetColors(int value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.QuantizeSettings_SetColors(Instance, (UIntPtr)value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.QuantizeSettings_SetColors(Instance, (UIntPtr)value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.QuantizeSettings_SetColors(Instance, (UIntPtr)value);
+                case Architecture.X86:
+                     NativeMethods.X86.QuantizeSettings_SetColors(Instance, (UIntPtr)value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.QuantizeSettings_SetColors(Instance, (UIntPtr)value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetColorSpace(ColorSpace value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.QuantizeSettings_SetColorSpace(Instance, (UIntPtr)value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.QuantizeSettings_SetColorSpace(Instance, (UIntPtr)value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.QuantizeSettings_SetColorSpace(Instance, (UIntPtr)value);
+                case Architecture.X86:
+                     NativeMethods.X86.QuantizeSettings_SetColorSpace(Instance, (UIntPtr)value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.QuantizeSettings_SetColorSpace(Instance, (UIntPtr)value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetDitherMethod(DitherMethod value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.QuantizeSettings_SetDitherMethod(Instance, (UIntPtr)value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.QuantizeSettings_SetDitherMethod(Instance, (UIntPtr)value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.QuantizeSettings_SetDitherMethod(Instance, (UIntPtr)value);
+                case Architecture.X86:
+                     NativeMethods.X86.QuantizeSettings_SetDitherMethod(Instance, (UIntPtr)value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.QuantizeSettings_SetDitherMethod(Instance, (UIntPtr)value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetMeasureErrors(bool value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.QuantizeSettings_SetMeasureErrors(Instance, value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.QuantizeSettings_SetMeasureErrors(Instance, value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.QuantizeSettings_SetMeasureErrors(Instance, value);
+                case Architecture.X86:
+                     NativeMethods.X86.QuantizeSettings_SetMeasureErrors(Instance, value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.QuantizeSettings_SetMeasureErrors(Instance, value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetTreeDepth(int value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.QuantizeSettings_SetTreeDepth(Instance, (UIntPtr)value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.QuantizeSettings_SetTreeDepth(Instance, (UIntPtr)value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.QuantizeSettings_SetTreeDepth(Instance, (UIntPtr)value);
+                case Architecture.X86:
+                     NativeMethods.X86.QuantizeSettings_SetTreeDepth(Instance, (UIntPtr)value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.QuantizeSettings_SetTreeDepth(Instance, (UIntPtr)value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
         }
         internal static INativeInstance CreateInstance(IQuantizeSettings? instance)

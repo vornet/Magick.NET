@@ -80,176 +80,284 @@ namespace ImageMagick
                 public static extern IntPtr ConnectedComponent_GetY(IntPtr instance);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void ConnectedComponent_DisposeList(IntPtr list);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr ConnectedComponent_GetArea(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr ConnectedComponent_GetCentroid(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr ConnectedComponent_GetColor(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr ConnectedComponent_GetHeight(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr ConnectedComponent_GetId(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr ConnectedComponent_GetInstance(IntPtr list, UIntPtr index);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr ConnectedComponent_GetWidth(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr ConnectedComponent_GetX(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr ConnectedComponent_GetY(IntPtr instance);
+            }
+            #endif
         }
         private unsafe static class NativeConnectedComponent
         {
             static NativeConnectedComponent() { Environment.Initialize(); }
             public static void DisposeList(IntPtr list)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.ConnectedComponent_DisposeList(list);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.ConnectedComponent_DisposeList(list);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.ConnectedComponent_DisposeList(list);
+                case Architecture.X86:
+                     NativeMethods.X86.ConnectedComponent_DisposeList(list);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.ConnectedComponent_DisposeList(list);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public static int GetArea(IntPtr instance)
             {
                 UIntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.ConnectedComponent_GetArea(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.ConnectedComponent_GetArea(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.ConnectedComponent_GetArea(instance);
+                case Architecture.X86:
+                     result = NativeMethods.X86.ConnectedComponent_GetArea(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.ConnectedComponent_GetArea(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return (int)result;
             }
             public static PointInfo GetCentroid(IntPtr instance)
             {
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.ConnectedComponent_GetCentroid(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.ConnectedComponent_GetCentroid(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.ConnectedComponent_GetCentroid(instance);
+                case Architecture.X86:
+                     result = NativeMethods.X86.ConnectedComponent_GetCentroid(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.ConnectedComponent_GetCentroid(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return PointInfo.CreateInstance(result);
             }
             public static IMagickColor<QuantumType>? GetColor(IntPtr instance)
             {
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.ConnectedComponent_GetColor(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.ConnectedComponent_GetColor(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.ConnectedComponent_GetColor(instance);
+                case Architecture.X86:
+                     result = NativeMethods.X86.ConnectedComponent_GetColor(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.ConnectedComponent_GetColor(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return MagickColor.CreateInstance(result);
             }
             public static int GetHeight(IntPtr instance)
             {
                 UIntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.ConnectedComponent_GetHeight(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.ConnectedComponent_GetHeight(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.ConnectedComponent_GetHeight(instance);
+                case Architecture.X86:
+                     result = NativeMethods.X86.ConnectedComponent_GetHeight(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.ConnectedComponent_GetHeight(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return (int)result;
             }
             public static int GetId(IntPtr instance)
             {
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.ConnectedComponent_GetId(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.ConnectedComponent_GetId(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.ConnectedComponent_GetId(instance);
+                case Architecture.X86:
+                     result = NativeMethods.X86.ConnectedComponent_GetId(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.ConnectedComponent_GetId(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return (int)result;
             }
             public static IntPtr GetInstance(IntPtr list, int index)
             {
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.ConnectedComponent_GetInstance(list, (UIntPtr)index);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.ConnectedComponent_GetInstance(list, (UIntPtr)index);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.ConnectedComponent_GetInstance(list, (UIntPtr)index);
+                case Architecture.X86:
+                     result = NativeMethods.X86.ConnectedComponent_GetInstance(list, (UIntPtr)index);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.ConnectedComponent_GetInstance(list, (UIntPtr)index);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return result;
             }
             public static int GetWidth(IntPtr instance)
             {
                 UIntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.ConnectedComponent_GetWidth(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.ConnectedComponent_GetWidth(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.ConnectedComponent_GetWidth(instance);
+                case Architecture.X86:
+                     result = NativeMethods.X86.ConnectedComponent_GetWidth(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.ConnectedComponent_GetWidth(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return (int)result;
             }
             public static int GetX(IntPtr instance)
             {
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.ConnectedComponent_GetX(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.ConnectedComponent_GetX(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.ConnectedComponent_GetX(instance);
+                case Architecture.X86:
+                     result = NativeMethods.X86.ConnectedComponent_GetX(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.ConnectedComponent_GetX(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return (int)result;
             }
             public static int GetY(IntPtr instance)
             {
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.ConnectedComponent_GetY(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.ConnectedComponent_GetY(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.ConnectedComponent_GetY(instance);
+                case Architecture.X86:
+                     result = NativeMethods.X86.ConnectedComponent_GetY(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.ConnectedComponent_GetY(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return (int)result;
             }
         }

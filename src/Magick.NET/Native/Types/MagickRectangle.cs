@@ -74,39 +74,85 @@ namespace ImageMagick
                 public static extern IntPtr MagickRectangle_FromPageSize(IntPtr value);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickRectangle_Create();
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickRectangle_Dispose(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickRectangle_X_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickRectangle_X_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickRectangle_Y_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickRectangle_Y_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr MagickRectangle_Width_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickRectangle_Width_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr MagickRectangle_Height_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickRectangle_Height_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickRectangle_FromPageSize(IntPtr value);
+            }
+            #endif
         }
         private unsafe sealed class NativeMagickRectangle : NativeInstance
         {
             static NativeMagickRectangle() { Environment.Initialize(); }
             protected override void Dispose(IntPtr instance)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickRectangle_Dispose(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickRectangle_Dispose(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickRectangle_Dispose(instance);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickRectangle_Dispose(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickRectangle_Dispose(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public NativeMagickRectangle()
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X64.MagickRectangle_Create();
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     Instance = NativeMethods.X64.MagickRectangle_Create();
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X86.MagickRectangle_Create();
+                case Architecture.X86:
+                     Instance = NativeMethods.X86.MagickRectangle_Create();
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     Instance = NativeMethods.Arm64.MagickRectangle_Create();
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 if (Instance == IntPtr.Zero)
                     throw new InvalidOperationException();
             }
@@ -126,34 +172,50 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickRectangle_X_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickRectangle_X_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickRectangle_X_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickRectangle_X_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickRectangle_X_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (int)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickRectangle_X_Set(Instance, (IntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickRectangle_X_Set(Instance, (IntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickRectangle_X_Set(Instance, (IntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickRectangle_X_Set(Instance, (IntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickRectangle_X_Set(Instance, (IntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public int Y
@@ -161,34 +223,50 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickRectangle_Y_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickRectangle_Y_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickRectangle_Y_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickRectangle_Y_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickRectangle_Y_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (int)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickRectangle_Y_Set(Instance, (IntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickRectangle_Y_Set(Instance, (IntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickRectangle_Y_Set(Instance, (IntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickRectangle_Y_Set(Instance, (IntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickRectangle_Y_Set(Instance, (IntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public int Width
@@ -196,34 +274,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickRectangle_Width_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickRectangle_Width_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickRectangle_Width_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickRectangle_Width_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickRectangle_Width_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (int)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickRectangle_Width_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickRectangle_Width_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickRectangle_Width_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickRectangle_Width_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickRectangle_Width_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public int Height
@@ -231,34 +325,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickRectangle_Height_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickRectangle_Height_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickRectangle_Height_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickRectangle_Height_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickRectangle_Height_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (int)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickRectangle_Height_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickRectangle_Height_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickRectangle_Height_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickRectangle_Height_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickRectangle_Height_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public static MagickRectangle? FromPageSize(string? value)
@@ -266,18 +376,26 @@ namespace ImageMagick
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickRectangle_FromPageSize(valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickRectangle_FromPageSize(valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickRectangle_FromPageSize(valueNative.Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickRectangle_FromPageSize(valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickRectangle_FromPageSize(valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return MagickRectangle.CreateInstance(result);
                 }
             }

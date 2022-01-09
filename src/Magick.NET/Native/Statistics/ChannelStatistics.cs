@@ -82,6 +82,40 @@ namespace ImageMagick
                 public static extern double ChannelStatistics_Variance_Get(IntPtr instance);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr ChannelStatistics_Depth_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_Entropy_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_Kurtosis_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_Maximum_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_Mean_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_Minimum_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_Skewness_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_StandardDeviation_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_Sum_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_SumCubed_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_SumFourthPower_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_SumSquared_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelStatistics_Variance_Get(IntPtr instance);
+            }
+            #endif
         }
         private unsafe sealed class NativeChannelStatistics : ConstNativeInstance
         {
@@ -102,18 +136,26 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_Depth_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_Depth_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_Depth_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_Depth_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_Depth_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (int)result;
                 }
             }
@@ -122,18 +164,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_Entropy_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_Entropy_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_Entropy_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_Entropy_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_Entropy_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -142,18 +192,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_Kurtosis_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_Kurtosis_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_Kurtosis_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_Kurtosis_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_Kurtosis_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -162,18 +220,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_Maximum_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_Maximum_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_Maximum_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_Maximum_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_Maximum_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -182,18 +248,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_Mean_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_Mean_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_Mean_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_Mean_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_Mean_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -202,18 +276,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_Minimum_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_Minimum_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_Minimum_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_Minimum_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_Minimum_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -222,18 +304,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_Skewness_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_Skewness_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_Skewness_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_Skewness_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_Skewness_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -242,18 +332,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_StandardDeviation_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_StandardDeviation_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_StandardDeviation_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_StandardDeviation_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_StandardDeviation_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -262,18 +360,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_Sum_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_Sum_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_Sum_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_Sum_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_Sum_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -282,18 +388,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_SumCubed_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_SumCubed_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_SumCubed_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_SumCubed_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_SumCubed_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -302,18 +416,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_SumFourthPower_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_SumFourthPower_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_SumFourthPower_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_SumFourthPower_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_SumFourthPower_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -322,18 +444,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_SumSquared_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_SumSquared_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_SumSquared_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_SumSquared_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_SumSquared_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -342,18 +472,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelStatistics_Variance_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelStatistics_Variance_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelStatistics_Variance_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelStatistics_Variance_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelStatistics_Variance_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }

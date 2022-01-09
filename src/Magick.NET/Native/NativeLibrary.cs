@@ -14,8 +14,9 @@ namespace ImageMagick
 
         public const string X86Name = Name + "-" + QuantumName + "-x86.dll";
 
-        public const string X64Name = Name + "-" + QuantumName + "-Arm64.dll";
+        public const string X64Name = Name + "-" + QuantumName + "-x64.dll";
 
+        public const string Arm64Name = Name + "-" + QuantumName + "-Arm64.dll";
 
 #if Q8
         private const string Quantum = "Q8";
@@ -34,20 +35,24 @@ namespace ImageMagick
 #endif
 
 #if PLATFORM_AnyCPU
-        public static string PlatformName {
-            get {
-                switch (RuntimeInformation.ProcessArchitecture) {
+        public static string PlatformName
+        {
+            get
+            {
+                switch (RuntimeInformation.ProcessArchitecture)
+                {
                     case Architecture.X64:
                         return "x64";
                     case Architecture.Arm64:
                         return "Arm64";
                     case Architecture.X86:
                         return "x86";
-                    default:
-                        throw new NotSupportedException("ProcessArchitecture not supported.");
+                    case Architecture.Arm:
+                        break;
                 }
-            }
 
+                throw new NotSupportedException("ProcessArchitecture not supported.");
+            }
         }
 #endif
     }

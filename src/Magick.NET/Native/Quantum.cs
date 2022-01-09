@@ -52,6 +52,20 @@ namespace ImageMagick
                 public static extern byte Quantum_ScaleToByte(QuantumType value);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr Quantum_Depth_Get();
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern QuantumType Quantum_Max_Get();
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern byte Quantum_ScaleToByte(QuantumType value);
+            }
+            #endif
         }
         private unsafe static class NativeQuantum
         {
@@ -61,18 +75,26 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.Quantum_Depth_Get();
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.Quantum_Depth_Get();
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.Quantum_Depth_Get();
+                    case Architecture.X86:
+                         result = NativeMethods.X86.Quantum_Depth_Get();
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.Quantum_Depth_Get();
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (int)result;
                 }
             }
@@ -81,36 +103,52 @@ namespace ImageMagick
                 get
                 {
                     QuantumType result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.Quantum_Max_Get();
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.Quantum_Max_Get();
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.Quantum_Max_Get();
+                    case Architecture.X86:
+                         result = NativeMethods.X86.Quantum_Max_Get();
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.Quantum_Max_Get();
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
             public static byte ScaleToByte(QuantumType value)
             {
                 byte result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.Quantum_ScaleToByte(value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.Quantum_ScaleToByte(value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.Quantum_ScaleToByte(value);
+                case Architecture.X86:
+                     result = NativeMethods.X86.Quantum_ScaleToByte(value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.Quantum_ScaleToByte(value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return result;
             }
         }

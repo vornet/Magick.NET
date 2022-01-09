@@ -50,6 +50,24 @@ namespace ImageMagick
                 public static extern long OpenCLKernelProfileRecord_TotalDuration_Get(IntPtr instance);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern long OpenCLKernelProfileRecord_Count_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern long OpenCLKernelProfileRecord_MaximumDuration_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern long OpenCLKernelProfileRecord_MinimumDuration_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr OpenCLKernelProfileRecord_Name_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern long OpenCLKernelProfileRecord_TotalDuration_Get(IntPtr instance);
+            }
+            #endif
         }
         private unsafe sealed class NativeOpenCLKernelProfileRecord : ConstNativeInstance
         {
@@ -66,18 +84,26 @@ namespace ImageMagick
                 get
                 {
                     long result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.OpenCLKernelProfileRecord_Count_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.OpenCLKernelProfileRecord_Count_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.OpenCLKernelProfileRecord_Count_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.OpenCLKernelProfileRecord_Count_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.OpenCLKernelProfileRecord_Count_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -86,18 +112,26 @@ namespace ImageMagick
                 get
                 {
                     long result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.OpenCLKernelProfileRecord_MaximumDuration_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.OpenCLKernelProfileRecord_MaximumDuration_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.OpenCLKernelProfileRecord_MaximumDuration_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.OpenCLKernelProfileRecord_MaximumDuration_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.OpenCLKernelProfileRecord_MaximumDuration_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -106,18 +140,26 @@ namespace ImageMagick
                 get
                 {
                     long result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.OpenCLKernelProfileRecord_MinimumDuration_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.OpenCLKernelProfileRecord_MinimumDuration_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.OpenCLKernelProfileRecord_MinimumDuration_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.OpenCLKernelProfileRecord_MinimumDuration_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.OpenCLKernelProfileRecord_MinimumDuration_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -126,18 +168,26 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.OpenCLKernelProfileRecord_Name_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.OpenCLKernelProfileRecord_Name_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.OpenCLKernelProfileRecord_Name_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.OpenCLKernelProfileRecord_Name_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.OpenCLKernelProfileRecord_Name_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return UTF8Marshaler.NativeToManaged(result);
                 }
             }
@@ -146,18 +196,26 @@ namespace ImageMagick
                 get
                 {
                     long result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.OpenCLKernelProfileRecord_TotalDuration_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.OpenCLKernelProfileRecord_TotalDuration_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.OpenCLKernelProfileRecord_TotalDuration_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.OpenCLKernelProfileRecord_TotalDuration_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.OpenCLKernelProfileRecord_TotalDuration_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }

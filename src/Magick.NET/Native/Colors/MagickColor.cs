@@ -114,39 +114,100 @@ namespace ImageMagick
                 public static extern bool MagickColor_Initialize(IntPtr Instance, IntPtr value);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickColor_Create();
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickColor_Dispose(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern ulong MagickColor_Count_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern QuantumType MagickColor_Red_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickColor_Red_Set(IntPtr instance, QuantumType value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern QuantumType MagickColor_Green_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickColor_Green_Set(IntPtr instance, QuantumType value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern QuantumType MagickColor_Blue_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickColor_Blue_Set(IntPtr instance, QuantumType value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern QuantumType MagickColor_Alpha_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickColor_Alpha_Set(IntPtr instance, QuantumType value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern QuantumType MagickColor_Black_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickColor_Black_Set(IntPtr instance, QuantumType value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                [return: MarshalAs(UnmanagedType.Bool)]
+                public static extern bool MagickColor_IsCMYK_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickColor_IsCMYK_Set(IntPtr instance, [MarshalAs(UnmanagedType.Bool)] bool value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                [return: MarshalAs(UnmanagedType.Bool)]
+                public static extern bool MagickColor_FuzzyEquals(IntPtr Instance, IntPtr other, QuantumType fuzz);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                [return: MarshalAs(UnmanagedType.Bool)]
+                public static extern bool MagickColor_Initialize(IntPtr Instance, IntPtr value);
+            }
+            #endif
         }
         private unsafe sealed class NativeMagickColor : NativeInstance
         {
             static NativeMagickColor() { Environment.Initialize(); }
             protected override void Dispose(IntPtr instance)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickColor_Dispose(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickColor_Dispose(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickColor_Dispose(instance);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickColor_Dispose(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickColor_Dispose(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public NativeMagickColor()
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X64.MagickColor_Create();
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     Instance = NativeMethods.X64.MagickColor_Create();
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X86.MagickColor_Create();
+                case Architecture.X86:
+                     Instance = NativeMethods.X86.MagickColor_Create();
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     Instance = NativeMethods.Arm64.MagickColor_Create();
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 if (Instance == IntPtr.Zero)
                     throw new InvalidOperationException();
             }
@@ -166,18 +227,26 @@ namespace ImageMagick
                 get
                 {
                     ulong result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickColor_Count_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickColor_Count_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickColor_Count_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickColor_Count_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickColor_Count_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -186,34 +255,50 @@ namespace ImageMagick
                 get
                 {
                     QuantumType result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickColor_Red_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickColor_Red_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickColor_Red_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickColor_Red_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickColor_Red_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickColor_Red_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickColor_Red_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickColor_Red_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickColor_Red_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickColor_Red_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public QuantumType Green
@@ -221,34 +306,50 @@ namespace ImageMagick
                 get
                 {
                     QuantumType result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickColor_Green_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickColor_Green_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickColor_Green_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickColor_Green_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickColor_Green_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickColor_Green_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickColor_Green_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickColor_Green_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickColor_Green_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickColor_Green_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public QuantumType Blue
@@ -256,34 +357,50 @@ namespace ImageMagick
                 get
                 {
                     QuantumType result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickColor_Blue_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickColor_Blue_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickColor_Blue_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickColor_Blue_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickColor_Blue_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickColor_Blue_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickColor_Blue_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickColor_Blue_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickColor_Blue_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickColor_Blue_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public QuantumType Alpha
@@ -291,34 +408,50 @@ namespace ImageMagick
                 get
                 {
                     QuantumType result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickColor_Alpha_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickColor_Alpha_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickColor_Alpha_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickColor_Alpha_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickColor_Alpha_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickColor_Alpha_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickColor_Alpha_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickColor_Alpha_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickColor_Alpha_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickColor_Alpha_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public QuantumType Black
@@ -326,34 +459,50 @@ namespace ImageMagick
                 get
                 {
                     QuantumType result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickColor_Black_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickColor_Black_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickColor_Black_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickColor_Black_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickColor_Black_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickColor_Black_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickColor_Black_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickColor_Black_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickColor_Black_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickColor_Black_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public bool IsCMYK
@@ -361,34 +510,50 @@ namespace ImageMagick
                 get
                 {
                     bool result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickColor_IsCMYK_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickColor_IsCMYK_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickColor_IsCMYK_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickColor_IsCMYK_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickColor_IsCMYK_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickColor_IsCMYK_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickColor_IsCMYK_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickColor_IsCMYK_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickColor_IsCMYK_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickColor_IsCMYK_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public bool FuzzyEquals(IMagickColor<QuantumType>? other, QuantumType fuzz)
@@ -396,18 +561,26 @@ namespace ImageMagick
                 using (var otherNative = MagickColor.CreateInstance(other))
                 {
                     bool result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickColor_FuzzyEquals(Instance, otherNative.Instance, fuzz);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickColor_FuzzyEquals(Instance, otherNative.Instance, fuzz);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickColor_FuzzyEquals(Instance, otherNative.Instance, fuzz);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickColor_FuzzyEquals(Instance, otherNative.Instance, fuzz);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickColor_FuzzyEquals(Instance, otherNative.Instance, fuzz);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -416,18 +589,26 @@ namespace ImageMagick
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
                     bool result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickColor_Initialize(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickColor_Initialize(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickColor_Initialize(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickColor_Initialize(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickColor_Initialize(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }

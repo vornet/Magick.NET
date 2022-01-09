@@ -54,6 +54,26 @@ namespace ImageMagick
                 public static extern double ChannelMoments_GetHuInvariants(IntPtr Instance, UIntPtr index);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr ChannelMoments_Centroid_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelMoments_EllipseAngle_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr ChannelMoments_EllipseAxis_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelMoments_EllipseEccentricity_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelMoments_EllipseIntensity_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double ChannelMoments_GetHuInvariants(IntPtr Instance, UIntPtr index);
+            }
+            #endif
         }
         private unsafe sealed class NativeChannelMoments : ConstNativeInstance
         {
@@ -74,18 +94,26 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelMoments_Centroid_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelMoments_Centroid_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelMoments_Centroid_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelMoments_Centroid_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelMoments_Centroid_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return PointInfo.CreateInstance(result);
                 }
             }
@@ -94,18 +122,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelMoments_EllipseAngle_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelMoments_EllipseAngle_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelMoments_EllipseAngle_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelMoments_EllipseAngle_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelMoments_EllipseAngle_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -114,18 +150,26 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelMoments_EllipseAxis_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelMoments_EllipseAxis_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelMoments_EllipseAxis_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelMoments_EllipseAxis_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelMoments_EllipseAxis_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return PointInfo.CreateInstance(result);
                 }
             }
@@ -134,18 +178,26 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelMoments_EllipseEccentricity_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelMoments_EllipseEccentricity_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelMoments_EllipseEccentricity_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelMoments_EllipseEccentricity_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelMoments_EllipseEccentricity_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
@@ -154,36 +206,52 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.ChannelMoments_EllipseIntensity_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.ChannelMoments_EllipseIntensity_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.ChannelMoments_EllipseIntensity_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.ChannelMoments_EllipseIntensity_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.ChannelMoments_EllipseIntensity_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
             }
             public double GetHuInvariants(int index)
             {
                 double result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.ChannelMoments_GetHuInvariants(Instance, (UIntPtr)index);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.ChannelMoments_GetHuInvariants(Instance, (UIntPtr)index);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.ChannelMoments_GetHuInvariants(Instance, (UIntPtr)index);
+                case Architecture.X86:
+                     result = NativeMethods.X86.ChannelMoments_GetHuInvariants(Instance, (UIntPtr)index);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.ChannelMoments_GetHuInvariants(Instance, (UIntPtr)index);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return result;
             }
         }

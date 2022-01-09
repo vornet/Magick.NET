@@ -104,39 +104,95 @@ namespace ImageMagick
                 public static extern void MontageSettings_SetTitle(IntPtr Instance, IntPtr value);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MontageSettings_Create();
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_Dispose(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetBackgroundColor(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetBorderColor(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetBorderWidth(IntPtr Instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetFillColor(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetFont(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetFontPointsize(IntPtr Instance, double value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetFrameGeometry(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetGeometry(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetGravity(IntPtr Instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetShadow(IntPtr Instance, [MarshalAs(UnmanagedType.Bool)] bool value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetStrokeColor(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetTextureFileName(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetTileGeometry(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MontageSettings_SetTitle(IntPtr Instance, IntPtr value);
+            }
+            #endif
         }
         private unsafe sealed class NativeMontageSettings : NativeInstance
         {
             static NativeMontageSettings() { Environment.Initialize(); }
             protected override void Dispose(IntPtr instance)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MontageSettings_Dispose(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MontageSettings_Dispose(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MontageSettings_Dispose(instance);
+                case Architecture.X86:
+                     NativeMethods.X86.MontageSettings_Dispose(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MontageSettings_Dispose(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public NativeMontageSettings()
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X64.MontageSettings_Create();
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     Instance = NativeMethods.X64.MontageSettings_Create();
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X86.MontageSettings_Create();
+                case Architecture.X86:
+                     Instance = NativeMethods.X86.MontageSettings_Create();
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     Instance = NativeMethods.Arm64.MontageSettings_Create();
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 if (Instance == IntPtr.Zero)
                     throw new InvalidOperationException();
             }
@@ -151,240 +207,352 @@ namespace ImageMagick
             {
                 using (var valueNative = MagickColor.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MontageSettings_SetBackgroundColor(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MontageSettings_SetBackgroundColor(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MontageSettings_SetBackgroundColor(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MontageSettings_SetBackgroundColor(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MontageSettings_SetBackgroundColor(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetBorderColor(IMagickColor<QuantumType>? value)
             {
                 using (var valueNative = MagickColor.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MontageSettings_SetBorderColor(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MontageSettings_SetBorderColor(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MontageSettings_SetBorderColor(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MontageSettings_SetBorderColor(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MontageSettings_SetBorderColor(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetBorderWidth(int value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MontageSettings_SetBorderWidth(Instance, (UIntPtr)value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MontageSettings_SetBorderWidth(Instance, (UIntPtr)value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MontageSettings_SetBorderWidth(Instance, (UIntPtr)value);
+                case Architecture.X86:
+                     NativeMethods.X86.MontageSettings_SetBorderWidth(Instance, (UIntPtr)value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MontageSettings_SetBorderWidth(Instance, (UIntPtr)value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetFillColor(IMagickColor<QuantumType>? value)
             {
                 using (var valueNative = MagickColor.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MontageSettings_SetFillColor(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MontageSettings_SetFillColor(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MontageSettings_SetFillColor(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MontageSettings_SetFillColor(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MontageSettings_SetFillColor(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetFont(string? value)
             {
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MontageSettings_SetFont(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MontageSettings_SetFont(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MontageSettings_SetFont(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MontageSettings_SetFont(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MontageSettings_SetFont(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetFontPointsize(double value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MontageSettings_SetFontPointsize(Instance, value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MontageSettings_SetFontPointsize(Instance, value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MontageSettings_SetFontPointsize(Instance, value);
+                case Architecture.X86:
+                     NativeMethods.X86.MontageSettings_SetFontPointsize(Instance, value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MontageSettings_SetFontPointsize(Instance, value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetFrameGeometry(string? value)
             {
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MontageSettings_SetFrameGeometry(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MontageSettings_SetFrameGeometry(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MontageSettings_SetFrameGeometry(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MontageSettings_SetFrameGeometry(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MontageSettings_SetFrameGeometry(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetGeometry(string? value)
             {
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MontageSettings_SetGeometry(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MontageSettings_SetGeometry(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MontageSettings_SetGeometry(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MontageSettings_SetGeometry(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MontageSettings_SetGeometry(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetGravity(Gravity value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MontageSettings_SetGravity(Instance, (UIntPtr)value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MontageSettings_SetGravity(Instance, (UIntPtr)value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MontageSettings_SetGravity(Instance, (UIntPtr)value);
+                case Architecture.X86:
+                     NativeMethods.X86.MontageSettings_SetGravity(Instance, (UIntPtr)value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MontageSettings_SetGravity(Instance, (UIntPtr)value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetShadow(bool value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MontageSettings_SetShadow(Instance, value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MontageSettings_SetShadow(Instance, value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MontageSettings_SetShadow(Instance, value);
+                case Architecture.X86:
+                     NativeMethods.X86.MontageSettings_SetShadow(Instance, value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MontageSettings_SetShadow(Instance, value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetStrokeColor(IMagickColor<QuantumType>? value)
             {
                 using (var valueNative = MagickColor.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MontageSettings_SetStrokeColor(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MontageSettings_SetStrokeColor(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MontageSettings_SetStrokeColor(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MontageSettings_SetStrokeColor(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MontageSettings_SetStrokeColor(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetTextureFileName(string? value)
             {
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MontageSettings_SetTextureFileName(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MontageSettings_SetTextureFileName(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MontageSettings_SetTextureFileName(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MontageSettings_SetTextureFileName(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MontageSettings_SetTextureFileName(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetTileGeometry(string? value)
             {
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MontageSettings_SetTileGeometry(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MontageSettings_SetTileGeometry(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MontageSettings_SetTileGeometry(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MontageSettings_SetTileGeometry(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MontageSettings_SetTileGeometry(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetTitle(string? value)
             {
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MontageSettings_SetTitle(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MontageSettings_SetTitle(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MontageSettings_SetTitle(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MontageSettings_SetTitle(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MontageSettings_SetTitle(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
         }

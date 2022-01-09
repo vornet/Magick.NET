@@ -202,21 +202,31 @@ namespace FileGenerator.Native
 
         protected void WriteNativeIfContent(string action)
         {
-            WriteLine("#if PLATFORM_AnyCPU");
-            WriteLine("if (OperatingSystem.Is64Bit)");
-            WriteLine("#endif");
+            WriteLine("switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)");
+            WriteLine("{");
 
             WriteLine("#if PLATFORM_x64 || PLATFORM_AnyCPU");
-            WriteLine(string.Format(action, "X64"));
-            WriteLine("#endif");
-
-            WriteLine("#if PLATFORM_AnyCPU");
-            WriteLine("else");
+            WriteLine("case Architecture.X64:");
+            WriteLine("     " + string.Format(action, "X64"));
+            WriteLine("     break;");
             WriteLine("#endif");
 
             WriteLine("#if PLATFORM_x86 || PLATFORM_AnyCPU");
-            WriteLine(string.Format(action, "X86"));
+            WriteLine("case Architecture.X86:");
+            WriteLine("     " + string.Format(action, "X86"));
+            WriteLine("     break;");
             WriteLine("#endif");
+
+            WriteLine("#if PLATFORM_Arm64 || PLATFORM_AnyCPU");
+            WriteLine("case Architecture.Arm64:");
+            WriteLine("     " + string.Format(action, "Arm64"));
+            WriteLine("     break;");
+            WriteLine("#endif");
+
+            WriteLine("default:");
+            WriteLine("     throw new NotSupportedException(\"Processor architecture not supported.\");");
+
+            WriteLine("}");
         }
 
         protected void WriteThrowStart(bool throws)

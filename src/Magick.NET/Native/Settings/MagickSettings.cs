@@ -224,39 +224,155 @@ namespace ImageMagick
                 public static extern void MagickSettings_SetSize(IntPtr Instance, IntPtr value);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickSettings_Create();
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Dispose(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                [return: MarshalAs(UnmanagedType.Bool)]
+                public static extern bool MagickSettings_AntiAlias_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_AntiAlias_Set(IntPtr instance, [MarshalAs(UnmanagedType.Bool)] bool value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickSettings_BackgroundColor_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_BackgroundColor_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr MagickSettings_ColorSpace_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_ColorSpace_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr MagickSettings_ColorType_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_ColorType_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr MagickSettings_Compression_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Compression_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                [return: MarshalAs(UnmanagedType.Bool)]
+                public static extern bool MagickSettings_Debug_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Debug_Set(IntPtr instance, [MarshalAs(UnmanagedType.Bool)] bool value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickSettings_Density_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Density_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr MagickSettings_Depth_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Depth_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr MagickSettings_Endian_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Endian_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickSettings_Extract_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Extract_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickSettings_Format_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Format_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickSettings_Font_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Font_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double MagickSettings_FontPointsize_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_FontPointsize_Set(IntPtr instance, double value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                [return: MarshalAs(UnmanagedType.Bool)]
+                public static extern bool MagickSettings_Monochrome_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Monochrome_Set(IntPtr instance, [MarshalAs(UnmanagedType.Bool)] bool value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr MagickSettings_Interlace_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Interlace_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                [return: MarshalAs(UnmanagedType.Bool)]
+                public static extern bool MagickSettings_Verbose_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_Verbose_Set(IntPtr instance, [MarshalAs(UnmanagedType.Bool)] bool value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_SetColorFuzz(IntPtr Instance, double value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_SetFileName(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_SetNumberScenes(IntPtr Instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_SetOption(IntPtr Instance, IntPtr key, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_SetPage(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_SetPing(IntPtr Instance, [MarshalAs(UnmanagedType.Bool)] bool value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_SetQuality(IntPtr Instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_SetScenes(IntPtr Instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_SetScene(IntPtr Instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickSettings_SetSize(IntPtr Instance, IntPtr value);
+            }
+            #endif
         }
         private unsafe sealed class NativeMagickSettings : NativeInstance
         {
             static NativeMagickSettings() { Environment.Initialize(); }
             protected override void Dispose(IntPtr instance)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickSettings_Dispose(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickSettings_Dispose(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickSettings_Dispose(instance);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickSettings_Dispose(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickSettings_Dispose(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public NativeMagickSettings()
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X64.MagickSettings_Create();
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     Instance = NativeMethods.X64.MagickSettings_Create();
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X86.MagickSettings_Create();
+                case Architecture.X86:
+                     Instance = NativeMethods.X86.MagickSettings_Create();
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     Instance = NativeMethods.Arm64.MagickSettings_Create();
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 if (Instance == IntPtr.Zero)
                     throw new InvalidOperationException();
             }
@@ -272,34 +388,50 @@ namespace ImageMagick
                 get
                 {
                     bool result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_AntiAlias_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_AntiAlias_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_AntiAlias_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_AntiAlias_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_AntiAlias_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_AntiAlias_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_AntiAlias_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_AntiAlias_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_AntiAlias_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_AntiAlias_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public IMagickColor<QuantumType>? BackgroundColor
@@ -307,36 +439,52 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_BackgroundColor_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_BackgroundColor_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_BackgroundColor_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_BackgroundColor_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_BackgroundColor_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return MagickColor.CreateInstance(result);
                 }
                 set
                 {
                     using (var valueNative = MagickColor.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.MagickSettings_BackgroundColor_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.MagickSettings_BackgroundColor_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.MagickSettings_BackgroundColor_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.MagickSettings_BackgroundColor_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.MagickSettings_BackgroundColor_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -345,34 +493,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_ColorSpace_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_ColorSpace_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_ColorSpace_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_ColorSpace_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_ColorSpace_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (ColorSpace)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_ColorSpace_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_ColorSpace_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_ColorSpace_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_ColorSpace_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_ColorSpace_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public ColorType ColorType
@@ -380,34 +544,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_ColorType_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_ColorType_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_ColorType_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_ColorType_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_ColorType_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (ColorType)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_ColorType_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_ColorType_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_ColorType_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_ColorType_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_ColorType_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public CompressionMethod Compression
@@ -415,34 +595,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_Compression_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_Compression_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_Compression_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_Compression_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_Compression_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (CompressionMethod)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_Compression_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_Compression_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_Compression_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_Compression_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_Compression_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public bool Debug
@@ -450,34 +646,50 @@ namespace ImageMagick
                 get
                 {
                     bool result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_Debug_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_Debug_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_Debug_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_Debug_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_Debug_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_Debug_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_Debug_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_Debug_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_Debug_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_Debug_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public string? Density
@@ -485,36 +697,52 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_Density_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_Density_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_Density_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_Density_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_Density_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return UTF8Marshaler.NativeToManaged(result);
                 }
                 set
                 {
                     using (var valueNative = UTF8Marshaler.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.MagickSettings_Density_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.MagickSettings_Density_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.MagickSettings_Density_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.MagickSettings_Density_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.MagickSettings_Density_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -523,34 +751,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_Depth_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_Depth_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_Depth_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_Depth_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_Depth_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (int)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_Depth_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_Depth_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_Depth_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_Depth_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_Depth_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public Endian Endian
@@ -558,34 +802,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_Endian_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_Endian_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_Endian_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_Endian_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_Endian_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (Endian)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_Endian_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_Endian_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_Endian_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_Endian_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_Endian_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public string? Extract
@@ -593,36 +853,52 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_Extract_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_Extract_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_Extract_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_Extract_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_Extract_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return UTF8Marshaler.NativeToManaged(result);
                 }
                 set
                 {
                     using (var valueNative = UTF8Marshaler.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.MagickSettings_Extract_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.MagickSettings_Extract_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.MagickSettings_Extract_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.MagickSettings_Extract_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.MagickSettings_Extract_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -631,36 +907,52 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_Format_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_Format_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_Format_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_Format_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_Format_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return UTF8Marshaler.NativeToManaged(result);
                 }
                 set
                 {
                     using (var valueNative = UTF8Marshaler.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.MagickSettings_Format_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.MagickSettings_Format_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.MagickSettings_Format_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.MagickSettings_Format_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.MagickSettings_Format_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -669,36 +961,52 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_Font_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_Font_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_Font_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_Font_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_Font_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return UTF8Marshaler.NativeToManaged(result);
                 }
                 set
                 {
                     using (var valueNative = UTF8Marshaler.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.MagickSettings_Font_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.MagickSettings_Font_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.MagickSettings_Font_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.MagickSettings_Font_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.MagickSettings_Font_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -707,34 +1015,50 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_FontPointsize_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_FontPointsize_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_FontPointsize_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_FontPointsize_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_FontPointsize_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_FontPointsize_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_FontPointsize_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_FontPointsize_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_FontPointsize_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_FontPointsize_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public bool Monochrome
@@ -742,34 +1066,50 @@ namespace ImageMagick
                 get
                 {
                     bool result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_Monochrome_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_Monochrome_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_Monochrome_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_Monochrome_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_Monochrome_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_Monochrome_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_Monochrome_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_Monochrome_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_Monochrome_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_Monochrome_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public Interlace Interlace
@@ -777,34 +1117,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_Interlace_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_Interlace_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_Interlace_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_Interlace_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_Interlace_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (Interlace)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_Interlace_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_Interlace_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_Interlace_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_Interlace_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_Interlace_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public bool Verbose
@@ -812,83 +1168,123 @@ namespace ImageMagick
                 get
                 {
                     bool result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickSettings_Verbose_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickSettings_Verbose_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickSettings_Verbose_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickSettings_Verbose_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickSettings_Verbose_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_Verbose_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_Verbose_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_Verbose_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_Verbose_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_Verbose_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetColorFuzz(double value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickSettings_SetColorFuzz(Instance, value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickSettings_SetColorFuzz(Instance, value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickSettings_SetColorFuzz(Instance, value);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickSettings_SetColorFuzz(Instance, value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickSettings_SetColorFuzz(Instance, value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetFileName(string? value)
             {
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_SetFileName(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_SetFileName(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_SetFileName(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_SetFileName(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_SetFileName(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetNumberScenes(int value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickSettings_SetNumberScenes(Instance, (UIntPtr)value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickSettings_SetNumberScenes(Instance, (UIntPtr)value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickSettings_SetNumberScenes(Instance, (UIntPtr)value);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickSettings_SetNumberScenes(Instance, (UIntPtr)value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickSettings_SetNumberScenes(Instance, (UIntPtr)value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetOption(string? key, string? value)
             {
@@ -896,18 +1292,26 @@ namespace ImageMagick
                 {
                     using (var valueNative = UTF8Marshaler.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.MagickSettings_SetOption(Instance, keyNative.Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.MagickSettings_SetOption(Instance, keyNative.Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.MagickSettings_SetOption(Instance, keyNative.Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.MagickSettings_SetOption(Instance, keyNative.Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.MagickSettings_SetOption(Instance, keyNative.Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -915,99 +1319,147 @@ namespace ImageMagick
             {
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_SetPage(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_SetPage(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_SetPage(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_SetPage(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_SetPage(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetPing(bool value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickSettings_SetPing(Instance, value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickSettings_SetPing(Instance, value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickSettings_SetPing(Instance, value);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickSettings_SetPing(Instance, value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickSettings_SetPing(Instance, value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetQuality(int value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickSettings_SetQuality(Instance, (UIntPtr)value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickSettings_SetQuality(Instance, (UIntPtr)value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickSettings_SetQuality(Instance, (UIntPtr)value);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickSettings_SetQuality(Instance, (UIntPtr)value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickSettings_SetQuality(Instance, (UIntPtr)value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetScenes(string? value)
             {
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_SetScenes(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_SetScenes(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_SetScenes(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_SetScenes(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_SetScenes(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetScene(int value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickSettings_SetScene(Instance, (UIntPtr)value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickSettings_SetScene(Instance, (UIntPtr)value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickSettings_SetScene(Instance, (UIntPtr)value);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickSettings_SetScene(Instance, (UIntPtr)value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickSettings_SetScene(Instance, (UIntPtr)value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public void SetSize(string? value)
             {
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickSettings_SetSize(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickSettings_SetSize(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickSettings_SetSize(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickSettings_SetSize(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickSettings_SetSize(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
         }

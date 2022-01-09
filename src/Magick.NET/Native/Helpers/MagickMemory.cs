@@ -34,24 +34,42 @@ namespace ImageMagick
                 public static extern void MagickMemory_Relinquish(IntPtr value);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickMemory_Relinquish(IntPtr value);
+            }
+            #endif
         }
         private unsafe static class NativeMagickMemory
         {
             static NativeMagickMemory() { Environment.Initialize(); }
             public static void Relinquish(IntPtr value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickMemory_Relinquish(value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickMemory_Relinquish(value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickMemory_Relinquish(value);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickMemory_Relinquish(value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickMemory_Relinquish(value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
         }
     }

@@ -50,6 +50,24 @@ namespace ImageMagick
                 public static extern void PointInfoCollection_Set(IntPtr Instance, UIntPtr index, double x, double y);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr PointInfoCollection_Create(UIntPtr length);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void PointInfoCollection_Dispose(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double PointInfoCollection_GetX(IntPtr Instance, UIntPtr index);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double PointInfoCollection_GetY(IntPtr Instance, UIntPtr index);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void PointInfoCollection_Set(IntPtr Instance, UIntPtr index, double x, double y);
+            }
+            #endif
         }
         private NativePointInfoCollection _nativeInstance;
         private unsafe sealed class NativePointInfoCollection : NativeInstance
@@ -57,33 +75,49 @@ namespace ImageMagick
             static NativePointInfoCollection() { Environment.Initialize(); }
             protected override void Dispose(IntPtr instance)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.PointInfoCollection_Dispose(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.PointInfoCollection_Dispose(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.PointInfoCollection_Dispose(instance);
+                case Architecture.X86:
+                     NativeMethods.X86.PointInfoCollection_Dispose(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.PointInfoCollection_Dispose(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public NativePointInfoCollection(int length)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X64.PointInfoCollection_Create((UIntPtr)length);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     Instance = NativeMethods.X64.PointInfoCollection_Create((UIntPtr)length);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X86.PointInfoCollection_Create((UIntPtr)length);
+                case Architecture.X86:
+                     Instance = NativeMethods.X86.PointInfoCollection_Create((UIntPtr)length);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     Instance = NativeMethods.Arm64.PointInfoCollection_Create((UIntPtr)length);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 if (Instance == IntPtr.Zero)
                     throw new InvalidOperationException();
             }
@@ -101,51 +135,75 @@ namespace ImageMagick
             public double GetX(int index)
             {
                 double result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.PointInfoCollection_GetX(Instance, (UIntPtr)index);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.PointInfoCollection_GetX(Instance, (UIntPtr)index);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.PointInfoCollection_GetX(Instance, (UIntPtr)index);
+                case Architecture.X86:
+                     result = NativeMethods.X86.PointInfoCollection_GetX(Instance, (UIntPtr)index);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.PointInfoCollection_GetX(Instance, (UIntPtr)index);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return result;
             }
             public double GetY(int index)
             {
                 double result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.PointInfoCollection_GetY(Instance, (UIntPtr)index);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.PointInfoCollection_GetY(Instance, (UIntPtr)index);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.PointInfoCollection_GetY(Instance, (UIntPtr)index);
+                case Architecture.X86:
+                     result = NativeMethods.X86.PointInfoCollection_GetY(Instance, (UIntPtr)index);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.PointInfoCollection_GetY(Instance, (UIntPtr)index);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return result;
             }
             public void Set(int index, double x, double y)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.PointInfoCollection_Set(Instance, (UIntPtr)index, x, y);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.PointInfoCollection_Set(Instance, (UIntPtr)index, x, y);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.PointInfoCollection_Set(Instance, (UIntPtr)index, x, y);
+                case Architecture.X86:
+                     NativeMethods.X86.PointInfoCollection_Set(Instance, (UIntPtr)index, x, y);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.PointInfoCollection_Set(Instance, (UIntPtr)index, x, y);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
         }
     }

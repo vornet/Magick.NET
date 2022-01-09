@@ -134,6 +134,58 @@ namespace ImageMagick
                 public static extern void MagickImageCollection_WriteStream(IntPtr image, IntPtr settings, ReadWriteStreamDelegate? writer, SeekStreamDelegate? seeker, TellStreamDelegate? teller, ReadWriteStreamDelegate? reader, out IntPtr exception);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Append(IntPtr image, [MarshalAs(UnmanagedType.Bool)] bool stack, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Coalesce(IntPtr image, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Combine(IntPtr image, UIntPtr colorSpace, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Complex(IntPtr image, UIntPtr complexOperator, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Deconstruct(IntPtr image, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickImageCollection_Dispose(IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Evaluate(IntPtr image, UIntPtr evaluateOperator, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickImageCollection_Map(IntPtr image, IntPtr settings, IntPtr remapImage, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Merge(IntPtr image, UIntPtr method, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Montage(IntPtr image, IntPtr settings, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Morph(IntPtr image, UIntPtr frames, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Optimize(IntPtr image, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_OptimizePlus(IntPtr image, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickImageCollection_OptimizeTransparency(IntPtr image, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Polynomial(IntPtr image, double* terms, UIntPtr length, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickImageCollection_Quantize(IntPtr image, IntPtr settings, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_ReadBlob(IntPtr settings, byte* data, UIntPtr offset, UIntPtr length, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_ReadFile(IntPtr settings, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_ReadStream(IntPtr settings, ReadWriteStreamDelegate? reader, SeekStreamDelegate? seeker, TellStreamDelegate? teller, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr MagickImageCollection_Smush(IntPtr image, IntPtr offset, [MarshalAs(UnmanagedType.Bool)] bool stack, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickImageCollection_WriteFile(IntPtr image, IntPtr settings, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void MagickImageCollection_WriteStream(IntPtr image, IntPtr settings, ReadWriteStreamDelegate? writer, SeekStreamDelegate? seeker, TellStreamDelegate? teller, ReadWriteStreamDelegate? reader, out IntPtr exception);
+            }
+            #endif
         }
         private unsafe sealed class NativeMagickImageCollection : NativeHelper
         {
@@ -142,18 +194,26 @@ namespace ImageMagick
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickImageCollection_Append(MagickImage.GetInstance(image), stack, out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickImageCollection_Append(MagickImage.GetInstance(image), stack, out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickImageCollection_Append(MagickImage.GetInstance(image), stack, out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickImageCollection_Append(MagickImage.GetInstance(image), stack, out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickImageCollection_Append(MagickImage.GetInstance(image), stack, out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 var magickException = MagickExceptionHelper.Create(exception);
                 if (magickException == null)
                     return result;
@@ -170,18 +230,26 @@ namespace ImageMagick
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickImageCollection_Coalesce(MagickImage.GetInstance(image), out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickImageCollection_Coalesce(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickImageCollection_Coalesce(MagickImage.GetInstance(image), out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickImageCollection_Coalesce(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickImageCollection_Coalesce(MagickImage.GetInstance(image), out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 var magickException = MagickExceptionHelper.Create(exception);
                 if (magickException == null)
                     return result;
@@ -198,18 +266,26 @@ namespace ImageMagick
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickImageCollection_Combine(MagickImage.GetInstance(image), (UIntPtr)colorSpace, out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickImageCollection_Combine(MagickImage.GetInstance(image), (UIntPtr)colorSpace, out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickImageCollection_Combine(MagickImage.GetInstance(image), (UIntPtr)colorSpace, out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickImageCollection_Combine(MagickImage.GetInstance(image), (UIntPtr)colorSpace, out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickImageCollection_Combine(MagickImage.GetInstance(image), (UIntPtr)colorSpace, out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 var magickException = MagickExceptionHelper.Create(exception);
                 if (magickException == null)
                     return result;
@@ -226,18 +302,26 @@ namespace ImageMagick
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickImageCollection_Complex(MagickImage.GetInstance(image), (UIntPtr)complexOperator, out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickImageCollection_Complex(MagickImage.GetInstance(image), (UIntPtr)complexOperator, out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickImageCollection_Complex(MagickImage.GetInstance(image), (UIntPtr)complexOperator, out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickImageCollection_Complex(MagickImage.GetInstance(image), (UIntPtr)complexOperator, out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickImageCollection_Complex(MagickImage.GetInstance(image), (UIntPtr)complexOperator, out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 var magickException = MagickExceptionHelper.Create(exception);
                 if (magickException == null)
                     return result;
@@ -254,18 +338,26 @@ namespace ImageMagick
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickImageCollection_Deconstruct(MagickImage.GetInstance(image), out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickImageCollection_Deconstruct(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickImageCollection_Deconstruct(MagickImage.GetInstance(image), out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickImageCollection_Deconstruct(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickImageCollection_Deconstruct(MagickImage.GetInstance(image), out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 var magickException = MagickExceptionHelper.Create(exception);
                 if (magickException == null)
                     return result;
@@ -280,35 +372,51 @@ namespace ImageMagick
             }
             public static void Dispose(IntPtr value)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickImageCollection_Dispose(value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickImageCollection_Dispose(value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickImageCollection_Dispose(value);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickImageCollection_Dispose(value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickImageCollection_Dispose(value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public IntPtr Evaluate(IMagickImage? image, EvaluateOperator evaluateOperator)
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickImageCollection_Evaluate(MagickImage.GetInstance(image), (UIntPtr)evaluateOperator, out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickImageCollection_Evaluate(MagickImage.GetInstance(image), (UIntPtr)evaluateOperator, out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickImageCollection_Evaluate(MagickImage.GetInstance(image), (UIntPtr)evaluateOperator, out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickImageCollection_Evaluate(MagickImage.GetInstance(image), (UIntPtr)evaluateOperator, out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickImageCollection_Evaluate(MagickImage.GetInstance(image), (UIntPtr)evaluateOperator, out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 var magickException = MagickExceptionHelper.Create(exception);
                 if (magickException == null)
                     return result;
@@ -326,18 +434,26 @@ namespace ImageMagick
                 using (var settingsNative = QuantizeSettings.CreateInstance(settings))
                 {
                     IntPtr exception = IntPtr.Zero;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickImageCollection_Map(MagickImage.GetInstance(image), settingsNative.Instance, MagickImage.GetInstance(remapImage), out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickImageCollection_Map(MagickImage.GetInstance(image), settingsNative.Instance, MagickImage.GetInstance(remapImage), out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickImageCollection_Map(MagickImage.GetInstance(image), settingsNative.Instance, MagickImage.GetInstance(remapImage), out exception);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickImageCollection_Map(MagickImage.GetInstance(image), settingsNative.Instance, MagickImage.GetInstance(remapImage), out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickImageCollection_Map(MagickImage.GetInstance(image), settingsNative.Instance, MagickImage.GetInstance(remapImage), out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     CheckException(exception);
                 }
             }
@@ -345,18 +461,26 @@ namespace ImageMagick
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickImageCollection_Merge(MagickImage.GetInstance(image), (UIntPtr)method, out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickImageCollection_Merge(MagickImage.GetInstance(image), (UIntPtr)method, out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickImageCollection_Merge(MagickImage.GetInstance(image), (UIntPtr)method, out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickImageCollection_Merge(MagickImage.GetInstance(image), (UIntPtr)method, out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickImageCollection_Merge(MagickImage.GetInstance(image), (UIntPtr)method, out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 var magickException = MagickExceptionHelper.Create(exception);
                 if (magickException == null)
                     return result;
@@ -375,18 +499,26 @@ namespace ImageMagick
                 {
                     IntPtr exception = IntPtr.Zero;
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickImageCollection_Montage(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickImageCollection_Montage(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickImageCollection_Montage(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickImageCollection_Montage(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickImageCollection_Montage(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     var magickException = MagickExceptionHelper.Create(exception);
                     if (magickException == null)
                         return result;
@@ -404,18 +536,26 @@ namespace ImageMagick
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickImageCollection_Morph(MagickImage.GetInstance(image), (UIntPtr)frames, out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickImageCollection_Morph(MagickImage.GetInstance(image), (UIntPtr)frames, out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickImageCollection_Morph(MagickImage.GetInstance(image), (UIntPtr)frames, out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickImageCollection_Morph(MagickImage.GetInstance(image), (UIntPtr)frames, out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickImageCollection_Morph(MagickImage.GetInstance(image), (UIntPtr)frames, out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 var magickException = MagickExceptionHelper.Create(exception);
                 if (magickException == null)
                     return result;
@@ -432,18 +572,26 @@ namespace ImageMagick
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickImageCollection_Optimize(MagickImage.GetInstance(image), out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickImageCollection_Optimize(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickImageCollection_Optimize(MagickImage.GetInstance(image), out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickImageCollection_Optimize(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickImageCollection_Optimize(MagickImage.GetInstance(image), out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 var magickException = MagickExceptionHelper.Create(exception);
                 if (magickException == null)
                     return result;
@@ -460,18 +608,26 @@ namespace ImageMagick
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickImageCollection_OptimizePlus(MagickImage.GetInstance(image), out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickImageCollection_OptimizePlus(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickImageCollection_OptimizePlus(MagickImage.GetInstance(image), out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickImageCollection_OptimizePlus(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickImageCollection_OptimizePlus(MagickImage.GetInstance(image), out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 var magickException = MagickExceptionHelper.Create(exception);
                 if (magickException == null)
                     return result;
@@ -487,18 +643,26 @@ namespace ImageMagick
             public void OptimizeTransparency(IMagickImage? image)
             {
                 IntPtr exception = IntPtr.Zero;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.MagickImageCollection_OptimizeTransparency(MagickImage.GetInstance(image), out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.MagickImageCollection_OptimizeTransparency(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.MagickImageCollection_OptimizeTransparency(MagickImage.GetInstance(image), out exception);
+                case Architecture.X86:
+                     NativeMethods.X86.MagickImageCollection_OptimizeTransparency(MagickImage.GetInstance(image), out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.MagickImageCollection_OptimizeTransparency(MagickImage.GetInstance(image), out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 CheckException(exception);
             }
             public IntPtr Polynomial(IMagickImage? image, double[] terms, int length)
@@ -507,18 +671,26 @@ namespace ImageMagick
                 {
                     IntPtr exception = IntPtr.Zero;
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickImageCollection_Polynomial(MagickImage.GetInstance(image), termsFixed, (UIntPtr)length, out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickImageCollection_Polynomial(MagickImage.GetInstance(image), termsFixed, (UIntPtr)length, out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickImageCollection_Polynomial(MagickImage.GetInstance(image), termsFixed, (UIntPtr)length, out exception);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickImageCollection_Polynomial(MagickImage.GetInstance(image), termsFixed, (UIntPtr)length, out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickImageCollection_Polynomial(MagickImage.GetInstance(image), termsFixed, (UIntPtr)length, out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     var magickException = MagickExceptionHelper.Create(exception);
                     if (magickException == null)
                         return result;
@@ -537,18 +709,26 @@ namespace ImageMagick
                 using (var settingsNative = QuantizeSettings.CreateInstance(settings))
                 {
                     IntPtr exception = IntPtr.Zero;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickImageCollection_Quantize(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickImageCollection_Quantize(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickImageCollection_Quantize(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickImageCollection_Quantize(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickImageCollection_Quantize(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     CheckException(exception);
                 }
             }
@@ -560,18 +740,26 @@ namespace ImageMagick
                     {
                         IntPtr exception = IntPtr.Zero;
                         IntPtr result;
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        result = NativeMethods.X64.MagickImageCollection_ReadBlob(settingsNative.Instance, dataFixed, (UIntPtr)offset, (UIntPtr)length, out exception);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             result = NativeMethods.X64.MagickImageCollection_ReadBlob(settingsNative.Instance, dataFixed, (UIntPtr)offset, (UIntPtr)length, out exception);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        result = NativeMethods.X86.MagickImageCollection_ReadBlob(settingsNative.Instance, dataFixed, (UIntPtr)offset, (UIntPtr)length, out exception);
+                        case Architecture.X86:
+                             result = NativeMethods.X86.MagickImageCollection_ReadBlob(settingsNative.Instance, dataFixed, (UIntPtr)offset, (UIntPtr)length, out exception);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             result = NativeMethods.Arm64.MagickImageCollection_ReadBlob(settingsNative.Instance, dataFixed, (UIntPtr)offset, (UIntPtr)length, out exception);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                         var magickException = MagickExceptionHelper.Create(exception);
                         if (magickException == null)
                             return result;
@@ -595,18 +783,26 @@ namespace ImageMagick
                     {
                         IntPtr exception = IntPtr.Zero;
                         IntPtr result;
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        result = NativeMethods.X64.MagickImageCollection_ReadBlob(settingsNative.Instance, dataFixed, (UIntPtr)offset, (UIntPtr)length, out exception);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             result = NativeMethods.X64.MagickImageCollection_ReadBlob(settingsNative.Instance, dataFixed, (UIntPtr)offset, (UIntPtr)length, out exception);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        result = NativeMethods.X86.MagickImageCollection_ReadBlob(settingsNative.Instance, dataFixed, (UIntPtr)offset, (UIntPtr)length, out exception);
+                        case Architecture.X86:
+                             result = NativeMethods.X86.MagickImageCollection_ReadBlob(settingsNative.Instance, dataFixed, (UIntPtr)offset, (UIntPtr)length, out exception);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             result = NativeMethods.Arm64.MagickImageCollection_ReadBlob(settingsNative.Instance, dataFixed, (UIntPtr)offset, (UIntPtr)length, out exception);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                         var magickException = MagickExceptionHelper.Create(exception);
                         if (magickException == null)
                             return result;
@@ -628,18 +824,26 @@ namespace ImageMagick
                 {
                     IntPtr exception = IntPtr.Zero;
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickImageCollection_ReadFile(settingsNative.Instance, out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickImageCollection_ReadFile(settingsNative.Instance, out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickImageCollection_ReadFile(settingsNative.Instance, out exception);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickImageCollection_ReadFile(settingsNative.Instance, out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickImageCollection_ReadFile(settingsNative.Instance, out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     var magickException = MagickExceptionHelper.Create(exception);
                     if (magickException == null)
                         return result;
@@ -659,18 +863,26 @@ namespace ImageMagick
                 {
                     IntPtr exception = IntPtr.Zero;
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.MagickImageCollection_ReadStream(settingsNative.Instance, reader, seeker, teller, out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.MagickImageCollection_ReadStream(settingsNative.Instance, reader, seeker, teller, out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.MagickImageCollection_ReadStream(settingsNative.Instance, reader, seeker, teller, out exception);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.MagickImageCollection_ReadStream(settingsNative.Instance, reader, seeker, teller, out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.MagickImageCollection_ReadStream(settingsNative.Instance, reader, seeker, teller, out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     var magickException = MagickExceptionHelper.Create(exception);
                     if (magickException == null)
                         return result;
@@ -688,18 +900,26 @@ namespace ImageMagick
             {
                 IntPtr exception = IntPtr.Zero;
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.MagickImageCollection_Smush(MagickImage.GetInstance(image), (IntPtr)offset, stack, out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.MagickImageCollection_Smush(MagickImage.GetInstance(image), (IntPtr)offset, stack, out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.MagickImageCollection_Smush(MagickImage.GetInstance(image), (IntPtr)offset, stack, out exception);
+                case Architecture.X86:
+                     result = NativeMethods.X86.MagickImageCollection_Smush(MagickImage.GetInstance(image), (IntPtr)offset, stack, out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.MagickImageCollection_Smush(MagickImage.GetInstance(image), (IntPtr)offset, stack, out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 var magickException = MagickExceptionHelper.Create(exception);
                 if (magickException == null)
                     return result;
@@ -717,18 +937,26 @@ namespace ImageMagick
                 using (var settingsNative = MagickSettings.CreateInstance(settings))
                 {
                     IntPtr exception = IntPtr.Zero;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickImageCollection_WriteFile(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickImageCollection_WriteFile(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickImageCollection_WriteFile(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickImageCollection_WriteFile(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickImageCollection_WriteFile(MagickImage.GetInstance(image), settingsNative.Instance, out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     CheckException(exception);
                 }
             }
@@ -737,18 +965,26 @@ namespace ImageMagick
                 using (var settingsNative = MagickSettings.CreateInstance(settings))
                 {
                     IntPtr exception = IntPtr.Zero;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.MagickImageCollection_WriteStream(MagickImage.GetInstance(image), settingsNative.Instance, writer, seeker, teller, reader, out exception);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.MagickImageCollection_WriteStream(MagickImage.GetInstance(image), settingsNative.Instance, writer, seeker, teller, reader, out exception);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.MagickImageCollection_WriteStream(MagickImage.GetInstance(image), settingsNative.Instance, writer, seeker, teller, reader, out exception);
+                    case Architecture.X86:
+                         NativeMethods.X86.MagickImageCollection_WriteStream(MagickImage.GetInstance(image), settingsNative.Instance, writer, seeker, teller, reader, out exception);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.MagickImageCollection_WriteStream(MagickImage.GetInstance(image), settingsNative.Instance, writer, seeker, teller, reader, out exception);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     CheckException(exception);
                 }
             }

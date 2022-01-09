@@ -50,6 +50,24 @@ namespace ImageMagick
                 public static extern bool OpenCL_SetEnabled([MarshalAs(UnmanagedType.Bool)] bool value);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr OpenCL_GetDevices(out UIntPtr length);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr OpenCL_GetDevice(IntPtr list, UIntPtr index);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                [return: MarshalAs(UnmanagedType.Bool)]
+                public static extern bool OpenCL_GetEnabled();
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                [return: MarshalAs(UnmanagedType.Bool)]
+                public static extern bool OpenCL_SetEnabled([MarshalAs(UnmanagedType.Bool)] bool value);
+            }
+            #endif
         }
         private unsafe static class NativeOpenCL
         {
@@ -57,69 +75,101 @@ namespace ImageMagick
             public static IntPtr GetDevices(out UIntPtr length)
             {
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.OpenCL_GetDevices(out length);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.OpenCL_GetDevices(out length);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.OpenCL_GetDevices(out length);
+                case Architecture.X86:
+                     result = NativeMethods.X86.OpenCL_GetDevices(out length);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.OpenCL_GetDevices(out length);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return result;
             }
             public static IntPtr GetDevice(IntPtr list, int index)
             {
                 IntPtr result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.OpenCL_GetDevice(list, (UIntPtr)index);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.OpenCL_GetDevice(list, (UIntPtr)index);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.OpenCL_GetDevice(list, (UIntPtr)index);
+                case Architecture.X86:
+                     result = NativeMethods.X86.OpenCL_GetDevice(list, (UIntPtr)index);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.OpenCL_GetDevice(list, (UIntPtr)index);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return result;
             }
             public static bool GetEnabled()
             {
                 bool result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.OpenCL_GetEnabled();
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.OpenCL_GetEnabled();
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.OpenCL_GetEnabled();
+                case Architecture.X86:
+                     result = NativeMethods.X86.OpenCL_GetEnabled();
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.OpenCL_GetEnabled();
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return result;
             }
             public static bool SetEnabled(bool value)
             {
                 bool result;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                result = NativeMethods.X64.OpenCL_SetEnabled(value);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     result = NativeMethods.X64.OpenCL_SetEnabled(value);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                result = NativeMethods.X86.OpenCL_SetEnabled(value);
+                case Architecture.X86:
+                     result = NativeMethods.X86.OpenCL_SetEnabled(value);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     result = NativeMethods.Arm64.OpenCL_SetEnabled(value);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 return result;
             }
         }

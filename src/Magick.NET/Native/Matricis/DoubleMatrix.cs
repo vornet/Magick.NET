@@ -38,41 +38,69 @@ namespace ImageMagick
                 public static extern void DoubleMatrix_Dispose(IntPtr instance);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr DoubleMatrix_Create(double* values, UIntPtr order);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DoubleMatrix_Dispose(IntPtr instance);
+            }
+            #endif
         }
         private unsafe sealed class NativeDoubleMatrix : NativeInstance
         {
             static NativeDoubleMatrix() { Environment.Initialize(); }
             protected override void Dispose(IntPtr instance)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.DoubleMatrix_Dispose(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.DoubleMatrix_Dispose(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.DoubleMatrix_Dispose(instance);
+                case Architecture.X86:
+                     NativeMethods.X86.DoubleMatrix_Dispose(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.DoubleMatrix_Dispose(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public NativeDoubleMatrix(double[] values, int order)
             {
                 fixed (double* valuesFixed = values)
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    Instance = NativeMethods.X64.DoubleMatrix_Create(valuesFixed, (UIntPtr)order);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         Instance = NativeMethods.X64.DoubleMatrix_Create(valuesFixed, (UIntPtr)order);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    Instance = NativeMethods.X86.DoubleMatrix_Create(valuesFixed, (UIntPtr)order);
+                    case Architecture.X86:
+                         Instance = NativeMethods.X86.DoubleMatrix_Create(valuesFixed, (UIntPtr)order);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         Instance = NativeMethods.Arm64.DoubleMatrix_Create(valuesFixed, (UIntPtr)order);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     if (Instance == IntPtr.Zero)
                         throw new InvalidOperationException();
                 }

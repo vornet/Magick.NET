@@ -40,6 +40,18 @@ namespace ImageMagick.ImageOptimizers
                 public static extern void JpegOptimizer_CompressStream(ReadWriteStreamDelegate? reader, ReadWriteStreamDelegate? writer, [MarshalAs(UnmanagedType.Bool)] bool progressive, [MarshalAs(UnmanagedType.Bool)] bool lossless, UIntPtr quality, out IntPtr exception);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void JpegOptimizer_CompressFile(IntPtr input, IntPtr output, [MarshalAs(UnmanagedType.Bool)] bool progressive, [MarshalAs(UnmanagedType.Bool)] bool lossless, UIntPtr quality, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void JpegOptimizer_CompressStream(ReadWriteStreamDelegate? reader, ReadWriteStreamDelegate? writer, [MarshalAs(UnmanagedType.Bool)] bool progressive, [MarshalAs(UnmanagedType.Bool)] bool lossless, UIntPtr quality, out IntPtr exception);
+            }
+            #endif
         }
         private unsafe sealed class NativeJpegOptimizer : NativeHelper
         {
@@ -51,18 +63,26 @@ namespace ImageMagick.ImageOptimizers
                     using (var outputNative = UTF8Marshaler.CreateInstance(output))
                     {
                         IntPtr exception = IntPtr.Zero;
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.JpegOptimizer_CompressFile(inputNative.Instance, outputNative.Instance, progressive, lossless, (UIntPtr)quality, out exception);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.JpegOptimizer_CompressFile(inputNative.Instance, outputNative.Instance, progressive, lossless, (UIntPtr)quality, out exception);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.JpegOptimizer_CompressFile(inputNative.Instance, outputNative.Instance, progressive, lossless, (UIntPtr)quality, out exception);
+                        case Architecture.X86:
+                             NativeMethods.X86.JpegOptimizer_CompressFile(inputNative.Instance, outputNative.Instance, progressive, lossless, (UIntPtr)quality, out exception);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.JpegOptimizer_CompressFile(inputNative.Instance, outputNative.Instance, progressive, lossless, (UIntPtr)quality, out exception);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                         CheckException(exception);
                     }
                 }
@@ -70,18 +90,26 @@ namespace ImageMagick.ImageOptimizers
             public void CompressStream(ReadWriteStreamDelegate? reader, ReadWriteStreamDelegate? writer, bool progressive, bool lossless, int quality)
             {
                 IntPtr exception = IntPtr.Zero;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.JpegOptimizer_CompressStream(reader, writer, progressive, lossless, (UIntPtr)quality, out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.JpegOptimizer_CompressStream(reader, writer, progressive, lossless, (UIntPtr)quality, out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.JpegOptimizer_CompressStream(reader, writer, progressive, lossless, (UIntPtr)quality, out exception);
+                case Architecture.X86:
+                     NativeMethods.X86.JpegOptimizer_CompressStream(reader, writer, progressive, lossless, (UIntPtr)quality, out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.JpegOptimizer_CompressStream(reader, writer, progressive, lossless, (UIntPtr)quality, out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 CheckException(exception);
             }
         }

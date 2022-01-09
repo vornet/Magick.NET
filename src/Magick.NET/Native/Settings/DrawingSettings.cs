@@ -256,39 +256,171 @@ namespace ImageMagick
                 public static extern void DrawingSettings_SetText(IntPtr Instance, IntPtr value);
             }
             #endif
+            #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+            public static class Arm64
+            {
+                #if PLATFORM_AnyCPU
+                static Arm64() { NativeLibraryLoader.Load(); }
+                #endif
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr DrawingSettings_Create();
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_Dispose(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr DrawingSettings_BorderColor_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_BorderColor_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr DrawingSettings_FillColor_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_FillColor_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr DrawingSettings_FillRule_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_FillRule_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr DrawingSettings_Font_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_Font_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr DrawingSettings_FontFamily_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_FontFamily_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double DrawingSettings_FontPointsize_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_FontPointsize_Set(IntPtr instance, double value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr DrawingSettings_FontStyle_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_FontStyle_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr DrawingSettings_FontWeight_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_FontWeight_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                [return: MarshalAs(UnmanagedType.Bool)]
+                public static extern bool DrawingSettings_StrokeAntiAlias_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_StrokeAntiAlias_Set(IntPtr instance, [MarshalAs(UnmanagedType.Bool)] bool value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr DrawingSettings_StrokeColor_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_StrokeColor_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double DrawingSettings_StrokeDashOffset_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_StrokeDashOffset_Set(IntPtr instance, double value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr DrawingSettings_StrokeLineCap_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_StrokeLineCap_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr DrawingSettings_StrokeLineJoin_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_StrokeLineJoin_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr DrawingSettings_StrokeMiterLimit_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_StrokeMiterLimit_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double DrawingSettings_StrokeWidth_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_StrokeWidth_Set(IntPtr instance, double value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                [return: MarshalAs(UnmanagedType.Bool)]
+                public static extern bool DrawingSettings_TextAntiAlias_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_TextAntiAlias_Set(IntPtr instance, [MarshalAs(UnmanagedType.Bool)] bool value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr DrawingSettings_TextDirection_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_TextDirection_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr DrawingSettings_TextEncoding_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_TextEncoding_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern UIntPtr DrawingSettings_TextGravity_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_TextGravity_Set(IntPtr instance, UIntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double DrawingSettings_TextInterlineSpacing_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_TextInterlineSpacing_Set(IntPtr instance, double value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double DrawingSettings_TextInterwordSpacing_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_TextInterwordSpacing_Set(IntPtr instance, double value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern double DrawingSettings_TextKerning_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_TextKerning_Set(IntPtr instance, double value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern IntPtr DrawingSettings_TextUnderColor_Get(IntPtr instance);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_TextUnderColor_Set(IntPtr instance, IntPtr value);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_SetFillPattern(IntPtr Instance, IntPtr value, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_SetAffine(IntPtr Instance, double scaleX, double scaleY, double shearX, double shearY, double translateX, double translateY, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_SetStrokeDashArray(IntPtr Instance, double* dash, UIntPtr length);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_SetStrokePattern(IntPtr Instance, IntPtr value, out IntPtr exception);
+                [DllImport(NativeLibrary.Arm64Name, CallingConvention = CallingConvention.Cdecl)]
+                public static extern void DrawingSettings_SetText(IntPtr Instance, IntPtr value);
+            }
+            #endif
         }
         private unsafe sealed class NativeDrawingSettings : NativeInstance
         {
             static NativeDrawingSettings() { Environment.Initialize(); }
             protected override void Dispose(IntPtr instance)
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.DrawingSettings_Dispose(instance);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.DrawingSettings_Dispose(instance);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.DrawingSettings_Dispose(instance);
+                case Architecture.X86:
+                     NativeMethods.X86.DrawingSettings_Dispose(instance);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.DrawingSettings_Dispose(instance);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
             }
             public NativeDrawingSettings()
             {
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X64.DrawingSettings_Create();
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     Instance = NativeMethods.X64.DrawingSettings_Create();
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                Instance = NativeMethods.X86.DrawingSettings_Create();
+                case Architecture.X86:
+                     Instance = NativeMethods.X86.DrawingSettings_Create();
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     Instance = NativeMethods.Arm64.DrawingSettings_Create();
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 if (Instance == IntPtr.Zero)
                     throw new InvalidOperationException();
             }
@@ -304,36 +436,52 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_BorderColor_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_BorderColor_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_BorderColor_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_BorderColor_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_BorderColor_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return MagickColor.CreateInstance(result);
                 }
                 set
                 {
                     using (var valueNative = MagickColor.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.DrawingSettings_BorderColor_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.DrawingSettings_BorderColor_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.DrawingSettings_BorderColor_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.DrawingSettings_BorderColor_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.DrawingSettings_BorderColor_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -342,36 +490,52 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_FillColor_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_FillColor_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_FillColor_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_FillColor_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_FillColor_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return MagickColor.CreateInstance(result);
                 }
                 set
                 {
                     using (var valueNative = MagickColor.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.DrawingSettings_FillColor_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.DrawingSettings_FillColor_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.DrawingSettings_FillColor_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.DrawingSettings_FillColor_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.DrawingSettings_FillColor_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -380,34 +544,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_FillRule_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_FillRule_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_FillRule_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_FillRule_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_FillRule_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (FillRule)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_FillRule_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_FillRule_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_FillRule_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_FillRule_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_FillRule_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public string? Font
@@ -415,36 +595,52 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_Font_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_Font_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_Font_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_Font_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_Font_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return UTF8Marshaler.NativeToManaged(result);
                 }
                 set
                 {
                     using (var valueNative = UTF8Marshaler.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.DrawingSettings_Font_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.DrawingSettings_Font_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.DrawingSettings_Font_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.DrawingSettings_Font_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.DrawingSettings_Font_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -453,36 +649,52 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_FontFamily_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_FontFamily_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_FontFamily_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_FontFamily_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_FontFamily_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return UTF8Marshaler.NativeToManaged(result);
                 }
                 set
                 {
                     using (var valueNative = UTF8Marshaler.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.DrawingSettings_FontFamily_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.DrawingSettings_FontFamily_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.DrawingSettings_FontFamily_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.DrawingSettings_FontFamily_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.DrawingSettings_FontFamily_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -491,34 +703,50 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_FontPointsize_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_FontPointsize_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_FontPointsize_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_FontPointsize_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_FontPointsize_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_FontPointsize_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_FontPointsize_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_FontPointsize_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_FontPointsize_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_FontPointsize_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public FontStyleType FontStyle
@@ -526,34 +754,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_FontStyle_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_FontStyle_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_FontStyle_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_FontStyle_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_FontStyle_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (FontStyleType)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_FontStyle_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_FontStyle_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_FontStyle_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_FontStyle_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_FontStyle_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public FontWeight FontWeight
@@ -561,34 +805,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_FontWeight_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_FontWeight_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_FontWeight_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_FontWeight_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_FontWeight_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (FontWeight)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_FontWeight_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_FontWeight_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_FontWeight_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_FontWeight_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_FontWeight_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public bool StrokeAntiAlias
@@ -596,34 +856,50 @@ namespace ImageMagick
                 get
                 {
                     bool result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_StrokeAntiAlias_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_StrokeAntiAlias_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_StrokeAntiAlias_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_StrokeAntiAlias_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_StrokeAntiAlias_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_StrokeAntiAlias_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_StrokeAntiAlias_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_StrokeAntiAlias_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_StrokeAntiAlias_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_StrokeAntiAlias_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public IMagickColor<QuantumType>? StrokeColor
@@ -631,36 +907,52 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_StrokeColor_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_StrokeColor_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_StrokeColor_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_StrokeColor_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_StrokeColor_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return MagickColor.CreateInstance(result);
                 }
                 set
                 {
                     using (var valueNative = MagickColor.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.DrawingSettings_StrokeColor_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.DrawingSettings_StrokeColor_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.DrawingSettings_StrokeColor_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.DrawingSettings_StrokeColor_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.DrawingSettings_StrokeColor_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -669,34 +961,50 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_StrokeDashOffset_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_StrokeDashOffset_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_StrokeDashOffset_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_StrokeDashOffset_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_StrokeDashOffset_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_StrokeDashOffset_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_StrokeDashOffset_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_StrokeDashOffset_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_StrokeDashOffset_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_StrokeDashOffset_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public LineCap StrokeLineCap
@@ -704,34 +1012,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_StrokeLineCap_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_StrokeLineCap_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_StrokeLineCap_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_StrokeLineCap_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_StrokeLineCap_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (LineCap)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_StrokeLineCap_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_StrokeLineCap_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_StrokeLineCap_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_StrokeLineCap_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_StrokeLineCap_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public LineJoin StrokeLineJoin
@@ -739,34 +1063,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_StrokeLineJoin_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_StrokeLineJoin_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_StrokeLineJoin_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_StrokeLineJoin_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_StrokeLineJoin_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (LineJoin)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_StrokeLineJoin_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_StrokeLineJoin_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_StrokeLineJoin_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_StrokeLineJoin_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_StrokeLineJoin_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public int StrokeMiterLimit
@@ -774,34 +1114,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_StrokeMiterLimit_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_StrokeMiterLimit_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_StrokeMiterLimit_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_StrokeMiterLimit_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_StrokeMiterLimit_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (int)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_StrokeMiterLimit_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_StrokeMiterLimit_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_StrokeMiterLimit_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_StrokeMiterLimit_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_StrokeMiterLimit_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public double StrokeWidth
@@ -809,34 +1165,50 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_StrokeWidth_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_StrokeWidth_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_StrokeWidth_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_StrokeWidth_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_StrokeWidth_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_StrokeWidth_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_StrokeWidth_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_StrokeWidth_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_StrokeWidth_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_StrokeWidth_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public bool TextAntiAlias
@@ -844,34 +1216,50 @@ namespace ImageMagick
                 get
                 {
                     bool result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_TextAntiAlias_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_TextAntiAlias_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_TextAntiAlias_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_TextAntiAlias_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_TextAntiAlias_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_TextAntiAlias_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_TextAntiAlias_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_TextAntiAlias_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_TextAntiAlias_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_TextAntiAlias_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public TextDirection TextDirection
@@ -879,34 +1267,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_TextDirection_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_TextDirection_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_TextDirection_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_TextDirection_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_TextDirection_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (TextDirection)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_TextDirection_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_TextDirection_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_TextDirection_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_TextDirection_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_TextDirection_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public string? TextEncoding
@@ -914,36 +1318,52 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_TextEncoding_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_TextEncoding_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_TextEncoding_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_TextEncoding_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_TextEncoding_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return UTF8Marshaler.NativeToManaged(result);
                 }
                 set
                 {
                     using (var valueNative = UTF8Marshaler.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.DrawingSettings_TextEncoding_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.DrawingSettings_TextEncoding_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.DrawingSettings_TextEncoding_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.DrawingSettings_TextEncoding_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.DrawingSettings_TextEncoding_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
@@ -952,34 +1372,50 @@ namespace ImageMagick
                 get
                 {
                     UIntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_TextGravity_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_TextGravity_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_TextGravity_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_TextGravity_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_TextGravity_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return (Gravity)result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_TextGravity_Set(Instance, (UIntPtr)value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_TextGravity_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_TextGravity_Set(Instance, (UIntPtr)value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_TextGravity_Set(Instance, (UIntPtr)value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_TextGravity_Set(Instance, (UIntPtr)value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public double TextInterlineSpacing
@@ -987,34 +1423,50 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_TextInterlineSpacing_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_TextInterlineSpacing_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_TextInterlineSpacing_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_TextInterlineSpacing_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_TextInterlineSpacing_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_TextInterlineSpacing_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_TextInterlineSpacing_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_TextInterlineSpacing_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_TextInterlineSpacing_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_TextInterlineSpacing_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public double TextInterwordSpacing
@@ -1022,34 +1474,50 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_TextInterwordSpacing_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_TextInterwordSpacing_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_TextInterwordSpacing_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_TextInterwordSpacing_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_TextInterwordSpacing_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_TextInterwordSpacing_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_TextInterwordSpacing_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_TextInterwordSpacing_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_TextInterwordSpacing_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_TextInterwordSpacing_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public double TextKerning
@@ -1057,34 +1525,50 @@ namespace ImageMagick
                 get
                 {
                     double result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_TextKerning_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_TextKerning_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_TextKerning_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_TextKerning_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_TextKerning_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return result;
                 }
                 set
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_TextKerning_Set(Instance, value);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_TextKerning_Set(Instance, value);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_TextKerning_Set(Instance, value);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_TextKerning_Set(Instance, value);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_TextKerning_Set(Instance, value);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public IMagickColor<QuantumType>? TextUnderColor
@@ -1092,124 +1576,180 @@ namespace ImageMagick
                 get
                 {
                     IntPtr result;
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    result = NativeMethods.X64.DrawingSettings_TextUnderColor_Get(Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         result = NativeMethods.X64.DrawingSettings_TextUnderColor_Get(Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    result = NativeMethods.X86.DrawingSettings_TextUnderColor_Get(Instance);
+                    case Architecture.X86:
+                         result = NativeMethods.X86.DrawingSettings_TextUnderColor_Get(Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         result = NativeMethods.Arm64.DrawingSettings_TextUnderColor_Get(Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                     return MagickColor.CreateInstance(result);
                 }
                 set
                 {
                     using (var valueNative = MagickColor.CreateInstance(value))
                     {
-                        #if PLATFORM_AnyCPU
-                        if (OperatingSystem.Is64Bit)
-                        #endif
+                        switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                        {
                         #if PLATFORM_x64 || PLATFORM_AnyCPU
-                        NativeMethods.X64.DrawingSettings_TextUnderColor_Set(Instance, valueNative.Instance);
-                        #endif
-                        #if PLATFORM_AnyCPU
-                        else
+                        case Architecture.X64:
+                             NativeMethods.X64.DrawingSettings_TextUnderColor_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
                         #if PLATFORM_x86 || PLATFORM_AnyCPU
-                        NativeMethods.X86.DrawingSettings_TextUnderColor_Set(Instance, valueNative.Instance);
+                        case Architecture.X86:
+                             NativeMethods.X86.DrawingSettings_TextUnderColor_Set(Instance, valueNative.Instance);
+                             break;
                         #endif
+                        #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                        case Architecture.Arm64:
+                             NativeMethods.Arm64.DrawingSettings_TextUnderColor_Set(Instance, valueNative.Instance);
+                             break;
+                        #endif
+                        default:
+                             throw new NotSupportedException("Processor architecture not supported.");
+                        }
                     }
                 }
             }
             public void SetFillPattern(IMagickImage? value)
             {
                 IntPtr exception = IntPtr.Zero;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.DrawingSettings_SetFillPattern(Instance, MagickImage.GetInstance(value), out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.DrawingSettings_SetFillPattern(Instance, MagickImage.GetInstance(value), out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.DrawingSettings_SetFillPattern(Instance, MagickImage.GetInstance(value), out exception);
+                case Architecture.X86:
+                     NativeMethods.X86.DrawingSettings_SetFillPattern(Instance, MagickImage.GetInstance(value), out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.DrawingSettings_SetFillPattern(Instance, MagickImage.GetInstance(value), out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 CheckException(exception);
             }
             public void SetAffine(double scaleX, double scaleY, double shearX, double shearY, double translateX, double translateY)
             {
                 IntPtr exception = IntPtr.Zero;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.DrawingSettings_SetAffine(Instance, scaleX, scaleY, shearX, shearY, translateX, translateY, out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.DrawingSettings_SetAffine(Instance, scaleX, scaleY, shearX, shearY, translateX, translateY, out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.DrawingSettings_SetAffine(Instance, scaleX, scaleY, shearX, shearY, translateX, translateY, out exception);
+                case Architecture.X86:
+                     NativeMethods.X86.DrawingSettings_SetAffine(Instance, scaleX, scaleY, shearX, shearY, translateX, translateY, out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.DrawingSettings_SetAffine(Instance, scaleX, scaleY, shearX, shearY, translateX, translateY, out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 CheckException(exception);
             }
             public void SetStrokeDashArray(double[] dash, int length)
             {
                 fixed (double* dashFixed = dash)
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_SetStrokeDashArray(Instance, dashFixed, (UIntPtr)length);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_SetStrokeDashArray(Instance, dashFixed, (UIntPtr)length);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_SetStrokeDashArray(Instance, dashFixed, (UIntPtr)length);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_SetStrokeDashArray(Instance, dashFixed, (UIntPtr)length);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_SetStrokeDashArray(Instance, dashFixed, (UIntPtr)length);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
             public void SetStrokePattern(IMagickImage? value)
             {
                 IntPtr exception = IntPtr.Zero;
-                #if PLATFORM_AnyCPU
-                if (OperatingSystem.Is64Bit)
-                #endif
+                switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                {
                 #if PLATFORM_x64 || PLATFORM_AnyCPU
-                NativeMethods.X64.DrawingSettings_SetStrokePattern(Instance, MagickImage.GetInstance(value), out exception);
-                #endif
-                #if PLATFORM_AnyCPU
-                else
+                case Architecture.X64:
+                     NativeMethods.X64.DrawingSettings_SetStrokePattern(Instance, MagickImage.GetInstance(value), out exception);
+                     break;
                 #endif
                 #if PLATFORM_x86 || PLATFORM_AnyCPU
-                NativeMethods.X86.DrawingSettings_SetStrokePattern(Instance, MagickImage.GetInstance(value), out exception);
+                case Architecture.X86:
+                     NativeMethods.X86.DrawingSettings_SetStrokePattern(Instance, MagickImage.GetInstance(value), out exception);
+                     break;
                 #endif
+                #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                case Architecture.Arm64:
+                     NativeMethods.Arm64.DrawingSettings_SetStrokePattern(Instance, MagickImage.GetInstance(value), out exception);
+                     break;
+                #endif
+                default:
+                     throw new NotSupportedException("Processor architecture not supported.");
+                }
                 CheckException(exception);
             }
             public void SetText(string? value)
             {
                 using (var valueNative = UTF8Marshaler.CreateInstance(value))
                 {
-                    #if PLATFORM_AnyCPU
-                    if (OperatingSystem.Is64Bit)
-                    #endif
+                    switch (System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture)
+                    {
                     #if PLATFORM_x64 || PLATFORM_AnyCPU
-                    NativeMethods.X64.DrawingSettings_SetText(Instance, valueNative.Instance);
-                    #endif
-                    #if PLATFORM_AnyCPU
-                    else
+                    case Architecture.X64:
+                         NativeMethods.X64.DrawingSettings_SetText(Instance, valueNative.Instance);
+                         break;
                     #endif
                     #if PLATFORM_x86 || PLATFORM_AnyCPU
-                    NativeMethods.X86.DrawingSettings_SetText(Instance, valueNative.Instance);
+                    case Architecture.X86:
+                         NativeMethods.X86.DrawingSettings_SetText(Instance, valueNative.Instance);
+                         break;
                     #endif
+                    #if PLATFORM_Arm64 || PLATFORM_AnyCPU
+                    case Architecture.Arm64:
+                         NativeMethods.Arm64.DrawingSettings_SetText(Instance, valueNative.Instance);
+                         break;
+                    #endif
+                    default:
+                         throw new NotSupportedException("Processor architecture not supported.");
+                    }
                 }
             }
         }
