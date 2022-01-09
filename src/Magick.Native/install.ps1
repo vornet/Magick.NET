@@ -103,6 +103,10 @@ function copyLibraries($source, $target) {
     Copy-Item "$source\**\content\linux-musl\**\**\*.so" -Force "$target\linux-musl"
     copyNotice "$source\**\content\linux-musl\NOTICE" "$target\linux-musl\Notice.txt"
 
+
+    [void](New-Item -ItemType directory -Path "$target\linux-arm64")
+    Copy-Item "$source\**\content\linux-arm64\**\**\*.so" -Force "$target\linux-arm64"
+    
     [void](New-Item -ItemType directory -Path "$target\osx")
     Copy-Item "$source\**\content\macos\**\**\*.dylib" -Force "$target\osx"
     copyNotice "$source\**\content\macos\NOTICE" "$target\osx\Notice.txt"
